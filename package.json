@@ -1,0 +1,17 @@
+{
+	"name": "gameoff",
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"start": "vite",
+		"build": "vite build",
+		"preview": "parcel preview"
+	},
+	"dependencies": {
+		"phaser": "3.60.0"
+	},
+	"devDependencies": {
+		"prettier": "3.0.3",
+		"vite": "4.5.0"
+	}
+}
