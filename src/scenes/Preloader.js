@@ -1,18 +1,15 @@
-import Phaser from 'phaser'
+import Phaser from 'phaser';
 
 export class Preloader extends Phaser.Scene {
+	constructor() {
+		super('Preloader');
+	}
 
-    constructor() {
-        super('Preloader');
-    }
+	preload() {
+		this.load.image('bg', '/sprites/bg.jpg');
+	}
 
-    preload() {
-        this.load.image('bg', 'assets/bg/bg.jpg');
-        // TODO: load assets
-    }
-
-    create() {
-        this.scene.start('Menu');
-    }
-    
+	create() {
+		this.scene.start('Menu');
+	}
 }
