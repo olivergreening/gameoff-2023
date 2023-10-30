@@ -1,9 +1,7 @@
-import Phaser from 'phaser'
+import Phaser from 'phaser';
 
 export class Game extends Phaser.Scene {
-
-    constructor() {
-        super('Game');
-    }
-
+	constructor() {
+		super('Game');
+	}
 }
