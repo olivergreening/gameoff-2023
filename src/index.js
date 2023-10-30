@@ -22,6 +22,5 @@ window.onload = function () {
 		],
 	};
 
-	console.log(Utils.test());
 	const game = new Phaser.Game(config);
 };
