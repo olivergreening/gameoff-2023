@@ -13,6 +13,12 @@ window.onload = function () {
 			gamepad: false,
 			keyboard: true,
 		},
+		physics: {
+			default: 'arcade',
+			arcade: {
+				// debug: true
+			}
+		},		
 		scene: [
 			Scenes.Preloader,
 			Scenes.Menu,
