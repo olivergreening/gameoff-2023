@@ -2,39 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<style>
-			body {
-			  padding: 0;
-			  margin: 0;
-			  width: 100vw;
-			  height: 100vh;
-			  background: #000;
-			}
-		
-			canvas {
-			  pointer-events: none;
-			  /* fixes inability to regain keyboard focus when game is loaded in iframe*/
-			  position: absolute;
-			  top: 50%;
-			  left: 50%;
-			  transform: translate(-50%, -50%);
-		
-			  /* Use nearest neighbor interpolation */
-			  /* https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas */
-			  /* https://stackoverflow.com/questions/14068103/disable-antialising-when-scaling-images */
-			  image-rendering: optimizeSpeed;             /* Older versions of FF          */
-			  image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
-			  image-rendering: -webkit-optimize-contrast; /* Safari                        */
-			  image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
-			  image-rendering: crisp-edges;                 /* Awesome future-browsers       */
-			  image-rendering: optimize-contrast;         /* CSS3 Proposed                 */
-			  -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
-			}
-		  </style>
-	</head>
-
-	<body>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+		<link href="index.css" rel="stylesheet" />
 		<script type="module" src="src/index.js"></script>
-	</body>
+	</head>
 </html>

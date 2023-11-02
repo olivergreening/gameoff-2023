@@ -5,14 +5,7 @@ export class Preloader extends Phaser.Scene {
 		super('Preloader');
 	}
 
-	preload() {
-		this.load.image('agent', 'sprites/agent.png');
-        this.load.image('tileset01', 'tiles/tileset01.png');
-        this.load.tilemapTiledJSON('level1', 'levels/01.tmj');
-		this.load.spritesheet('agent_anim', 'sprites/agent.png', { frameWidth: 64, frameHeight: 64 });
-	}
+	create() {}
 
-	create() {
-		this.scene.start('Game');
-	}
+	preload() {}
 }

@@ -4,4 +4,8 @@ export class Settings extends Phaser.Scene {
 	constructor() {
 		super('Settings');
 	}
+
+	create() {}
+
+	update(time, delta) {}
 }
