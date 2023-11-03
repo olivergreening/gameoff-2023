@@ -16,7 +16,7 @@ body {
 }
 
 canvas {
-	border: 1px solid #FFF;
+	border: 1px solid #fff;
 	pointer-events: none;
 	image-rendering: optimizeSpeed;
 	image-rendering: -moz-crisp-edges;
