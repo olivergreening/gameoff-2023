@@ -12,15 +12,25 @@ TODO
 
 ## Development
 
-TODO
+**Requirements**
 
-## Assets Credits
+* [Node.js 20+](https://nodejs.org)
+* [npm](https://www.npmjs.com/package/npm) or [Yarn](https://yarnpkg.com/)
+* [Git LFS](https://git-lfs.github.com/)
 
-TODO
+To run a dev server:
+
+    npm start
+
+To produce a build:
+
+    npm build
 
 ## License
 
-[MIT](./LICENSE)
+Source code is under the MIT license, see [LICENSE](./LICENSE).
+
+All assets including game artwork, music and sound recordings are copyrighted. A LICENSE file is present in every `./public` subdirectory.
 
 ---
 
