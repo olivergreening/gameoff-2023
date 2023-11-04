@@ -11,6 +11,8 @@ const Consts = {
 	screenWidth: 800,
 	screenHeight: 600,
 	laneHeight: 64,
+
+	font: 'm6x11',
 	
 	// dev flags passed as url parameters, e.g. `?debug=true&show_fps=true`
 	debug: URLOptions[`debug`],
