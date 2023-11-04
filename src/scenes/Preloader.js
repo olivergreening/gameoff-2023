@@ -7,7 +7,11 @@ export class Preloader extends Phaser.Scene {
 	}
 
 	create() {
-		this.scene.start('Menu');
+		if (Consts.scene) {
+			this.scene.start(Consts.scene);
+		} else {
+			this.scene.start('Menu');
+		}
 	}
 
 	preload() {

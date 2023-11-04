@@ -20,6 +20,7 @@ const Consts = {
 	showFPS: URLOptions[`show_fps`],
 	noSounds: URLOptions[`no_sound`],
 	noMusic: URLOptions[`no_music`],
+	scene: URLOptions[`scene`],
 };
 
 console.debug('[dev] options', URLOptions);
