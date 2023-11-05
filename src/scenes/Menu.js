@@ -10,7 +10,7 @@ const TITLE_FONT_SIZE = 64, MENU_FONT_SIZE = 38, TEXT_FONT_SIZE = 24;
 const MenuStates = {
 	MAIN: 1,
 	OPTIONS: 2,
-	HOF: 3,
+	HALL_OF_FAME: 3,
 	CREDITS: 4,
 };
 
@@ -35,7 +35,7 @@ export class Menu extends Phaser.Scene {
 		// common for all menus
 		this.tween = this.tweens.addCounter({
 			from: 0,
-			to: 0.25,
+			to: 0.15,
 			duration: 400,
 			yoyo: true,
 			repeat: -1,
@@ -81,10 +81,19 @@ export class Menu extends Phaser.Scene {
 				case MenuStates.OPTIONS:
 					switch (this.ypos) {
 						case 0: this.createMainMenu(); break; // go back to main
-						// TODO
+						case 1:
+							// toggle sound
+							this.enableSound = !this.enableSound;
+							this.menus[this.ypos].text = `SOUND: ${this.enableSound ? 'ON' : 'OFF'}`;
+							break;
+						case 2:
+							// toggle music
+							this.enableMusic = !this.enableMusic;
+							this.menus[this.ypos].text = `MUSIC: ${this.enableMusic ? 'ON' : 'OFF'}`;
+							break;
 					}
 					break;
-				case MenuStates.HOF:
+				case MenuStates.HALL_OF_FAME:
 					switch (this.ypos) {
 						case 0: this.createMainMenu(); break; // go back to main
 					}
@@ -136,11 +145,17 @@ export class Menu extends Phaser.Scene {
 
 		this.state = MenuStates.OPTIONS;
 		this.sectionTitle = this.add.bitmapText(W - 200, MY + 19, Consts.font, 'OPTIONS', MENU_FONT_SIZE);
+		// TODO: use values from an audio class
+		this.enableSound = true;
+		this.enableMusic = true;
 		this.menus = [
-			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE)
+			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 140, Consts.font, 'SOUND: ON', MENU_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 190, Consts.font, 'MUSIC: ON', MENU_FONT_SIZE),
+			// this.add.bitmapText(MX, MY + 240, Consts.font, 'GAMEPAD: ON', MENU_FONT_SIZE),
 		];
 		this.ypos = 0;
-		this.ymax = 0;
+		this.ymax = 2;
 
 		if (this.tween) {
 			this.tween.restart();
@@ -150,7 +165,7 @@ export class Menu extends Phaser.Scene {
 	createHallOfFame() {
 		this.clearMenu();
 
-		this.state = MenuStates.HOF;
+		this.state = MenuStates.HALL_OF_FAME;
 		this.sectionTitle = this.add.bitmapText(W - 240, MY + 19, Consts.font, 'HALL OF FAME', MENU_FONT_SIZE);
 		this.menus = [
 			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE)
