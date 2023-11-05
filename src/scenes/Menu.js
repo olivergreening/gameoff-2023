@@ -9,7 +9,7 @@ const TITLE_FONT_SIZE = 64, MENU_FONT_SIZE = 38, TEXT_FONT_SIZE = 24;
 
 const MenuStates = {
 	MAIN: 1,
-	SETTINGS: 2,
+	OPTIONS: 2,
 	HOF: 3,
 	CREDITS: 4,
 };
@@ -72,22 +72,26 @@ export class Menu extends Phaser.Scene {
 			switch (this.state) {
 				case MenuStates.MAIN:
 					switch (this.ypos) {
+						case 0: this.scene.start('Game'); break; // TODO: add transition scene
+						case 1: this.createOptions(); break;
+						case 2: this.createHallOfFame(); break;
 						case 3: this.createCredits(); break;
 					}
 					break;
-				case MenuStates.SETTINGS:
+				case MenuStates.OPTIONS:
 					switch (this.ypos) {
-
+						case 0: this.createMainMenu(); break; // go back to main
+						// TODO
 					}
 					break;
 				case MenuStates.HOF:
 					switch (this.ypos) {
-
+						case 0: this.createMainMenu(); break; // go back to main
 					}
 					break;
 				case MenuStates.CREDITS:
 					switch (this.ypos) {
-						case 0: this.createMainMenu(); break;
+						case 0: this.createMainMenu(); break; // go back to main
 					}
 					break;
 			}
@@ -127,6 +131,38 @@ export class Menu extends Phaser.Scene {
 		}
 	}
 
+	createOptions() {
+		this.clearMenu();
+
+		this.state = MenuStates.OPTIONS;
+		this.sectionTitle = this.add.bitmapText(W - 200, MY + 19, Consts.font, 'OPTIONS', MENU_FONT_SIZE);
+		this.back = this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE);
+
+		this.menus = [this.back];
+		this.ypos = 0;
+		this.ymax = 0;
+
+		if (this.tween) {
+			this.tween.restart();
+		}
+	}
+
+	createHallOfFame() {
+		this.clearMenu();
+
+		this.state = MenuStates.HOF;
+		this.sectionTitle = this.add.bitmapText(W - 240, MY + 19, Consts.font, 'HALL OF FAME', MENU_FONT_SIZE);
+		this.back = this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE);
+
+		this.menus = [this.back];
+		this.ypos = 0;
+		this.ymax = 0;
+
+		if (this.tween) {
+			this.tween.restart();
+		}
+	}
+
 	createCredits() {
 		this.clearMenu();
 
@@ -137,7 +173,7 @@ export class Menu extends Phaser.Scene {
 		this.menus = [this.back];
 		this.ypos = 0;
 		this.ymax = 0;
-		
+
 		this.texts.push(this.add.bitmapText(MX, MY + 120, Consts.font, 'gfx:', TEXT_FONT_SIZE));
 		this.texts.push(this.add.bitmapText(MX + 20, MY + 150, Consts.font, 'BeshkekArt, beshkekart.itch.io', TEXT_FONT_SIZE));
 		this.texts.push(this.add.bitmapText(MX, MY + 190, Consts.font, 'programming:', TEXT_FONT_SIZE));
