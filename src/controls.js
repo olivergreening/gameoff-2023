@@ -32,15 +32,13 @@ export default class Controls {
                 input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
             ],
             action1: [
-                input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X),
-                input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O),
+                input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Y),
+                input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z),
                 input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
                 input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
             ],
             action2: [
-                input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Y),
-                input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P),
-                // input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+                input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X),
             ]
         };
 
@@ -49,14 +47,7 @@ export default class Controls {
         if (Consts.debug) {
             this.keys = {
                 ...this.keys,
-                killAll: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X),
-                killNearby: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C),
-                killVisible: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V),
-                warpAtEnd: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B),
-                hurtHero: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N),
-                healHero: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M),
-                showDialog: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
-                makeRain: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R),
+                //killAll: input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X),
             };
         }
     }
