@@ -117,12 +117,12 @@ export class Menu extends Phaser.Scene {
 		this.clearMenu();
 
 		this.state = MenuStates.MAIN;
-		this.play = this.add.bitmapText(MX, MY + 140, Consts.font, 'PLAY', MENU_FONT_SIZE);
-		this.options = this.add.bitmapText(MX, MY + 190, Consts.font, 'OPTIONS', MENU_FONT_SIZE);
-		this.hof = this.add.bitmapText(MX, MY + 240, Consts.font, 'HALL OF FAME', MENU_FONT_SIZE);
-		this.credits = this.add.bitmapText(MX, MY + 290, Consts.font, 'CREDITS', MENU_FONT_SIZE);
-
-		this.menus = [this.play, this.options, this.hof, this.credits];
+		this.menus = [
+			this.add.bitmapText(MX, MY + 140, Consts.font, 'PLAY', MENU_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 190, Consts.font, 'OPTIONS', MENU_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 240, Consts.font, 'HALL OF FAME', MENU_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 290, Consts.font, 'CREDITS', MENU_FONT_SIZE)
+		];
 		this.ypos = 0;
 		this.ymax = 3;
 
@@ -136,9 +136,9 @@ export class Menu extends Phaser.Scene {
 
 		this.state = MenuStates.OPTIONS;
 		this.sectionTitle = this.add.bitmapText(W - 200, MY + 19, Consts.font, 'OPTIONS', MENU_FONT_SIZE);
-		this.back = this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE);
-
-		this.menus = [this.back];
+		this.menus = [
+			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE)
+		];
 		this.ypos = 0;
 		this.ymax = 0;
 
@@ -152,9 +152,9 @@ export class Menu extends Phaser.Scene {
 
 		this.state = MenuStates.HOF;
 		this.sectionTitle = this.add.bitmapText(W - 240, MY + 19, Consts.font, 'HALL OF FAME', MENU_FONT_SIZE);
-		this.back = this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE);
-
-		this.menus = [this.back];
+		this.menus = [
+			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE)
+		];
 		this.ypos = 0;
 		this.ymax = 0;
 
@@ -168,21 +168,23 @@ export class Menu extends Phaser.Scene {
 
 		this.state = MenuStates.CREDITS;
 		this.sectionTitle = this.add.bitmapText(W - 200, MY + 19, Consts.font, 'CREDITS', MENU_FONT_SIZE);
-		this.back = this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE);
-
-		this.menus = [this.back];
+		this.menus = [
+			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE)
+		];
 		this.ypos = 0;
 		this.ymax = 0;
 
-		this.texts.push(this.add.bitmapText(MX, MY + 120, Consts.font, 'gfx:', TEXT_FONT_SIZE));
-		this.texts.push(this.add.bitmapText(MX + 20, MY + 150, Consts.font, 'BeshkekArt, beshkekart.itch.io', TEXT_FONT_SIZE));
-		this.texts.push(this.add.bitmapText(MX, MY + 190, Consts.font, 'programming:', TEXT_FONT_SIZE));
-		this.texts.push(this.add.bitmapText(MX + 20, MY + 220, Consts.font, 'Oliver Greening', TEXT_FONT_SIZE));
-		this.texts.push(this.add.bitmapText(MX + 20, MY + 250, Consts.font, 'Petar Petrov', TEXT_FONT_SIZE));
-		this.texts.push(this.add.bitmapText(MX, MY + 290, Consts.font, 'music/sfx:', TEXT_FONT_SIZE));
-		this.texts.push(this.add.bitmapText(MX + 20, MY + 320, Consts.font, 'Warren Corkscrew, soundcloud.com/warren-corkscrew', TEXT_FONT_SIZE));
-		this.texts.push(this.add.bitmapText(MX, MY + 360, Consts.font, 'voice acting:', TEXT_FONT_SIZE));
-		this.texts.push(this.add.bitmapText(MX + 20, MY + 390, Consts.font, 'Patryk Sokol, Sokolsoundworks.com', TEXT_FONT_SIZE));
+		this.texts = [
+			this.add.bitmapText(MX, MY + 120, Consts.font, 'gfx:', TEXT_FONT_SIZE),
+			this.add.bitmapText(MX + 20, MY + 150, Consts.font, 'BeshkekArt, beshkekart.itch.io', TEXT_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 190, Consts.font, 'programming:', TEXT_FONT_SIZE),
+			this.add.bitmapText(MX + 20, MY + 220, Consts.font, 'Oliver Greening', TEXT_FONT_SIZE),
+			this.add.bitmapText(MX + 20, MY + 250, Consts.font, 'Petar Petrov', TEXT_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 290, Consts.font, 'music/sfx:', TEXT_FONT_SIZE),
+			this.add.bitmapText(MX + 20, MY + 320, Consts.font, 'Warren Corkscrew, soundcloud.com/warren-corkscrew', TEXT_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 360, Consts.font, 'voice acting:', TEXT_FONT_SIZE),
+			this.add.bitmapText(MX + 20, MY + 390, Consts.font, 'Patryk Sokol, Sokolsoundworks.com', TEXT_FONT_SIZE)
+		];
 
 		if (this.tween) {
 			this.tween.restart();
