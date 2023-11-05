@@ -15,6 +15,8 @@ export class Preloader extends Phaser.Scene {
 	}
 
 	preload() {
+		this.createLoadingBar();
+
 		// fonts
 		this.load.bitmapFont(Consts.font, './fonts/m6x11/m6x11_no_aa.png', './fonts/m6x11/m6x11_no_aa.xml');
 
@@ -27,5 +29,18 @@ export class Preloader extends Phaser.Scene {
 		// audio sfx
 
 		// music
+	}
+
+	createLoadingBar() {
+		const progress = this.add.graphics();
+
+		this.load.on('progress', (value) => {
+			progress.clear();
+			progress.fillStyle(0xffffff, 1);
+			progress.fillRect(0, Consts.screenHeight * 0.5 - 10,
+				Consts.screenWidth * value, 20);
+		});
+
+		this.load.on('complete', () => progress.destroy());
 	}
 }
