@@ -10,7 +10,6 @@ window.location.search.slice(1).split('&').map((option) => {
 const Consts = {
 	screenWidth: 800,
 	screenHeight: 600,
-	laneHeight: 64,
 
 	font: 'm6x11',
 	

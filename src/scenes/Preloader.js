@@ -25,7 +25,8 @@ export class Preloader extends Phaser.Scene {
 		this.load.image('menu_bkg_2', './images/3.png');
 
 		// spritesheets
-
+		this.load.spritesheet('player', './sprites/Car.png', {frameWidth: 32, frameHeight: 32});
+		
 		// audio sfx
 
 		// music
