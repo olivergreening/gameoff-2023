@@ -1,13 +1,12 @@
-import Consts from './consts';
+import { KeyState } from './KeyState';
+import Consts from '../consts';
 
 const stickThreshold = 0.1;
 
-export default class Controls {
+export class Controls {
 
-    constructor(input, justReleased = false) {
+    constructor(input) {
         this.input = input;
-        // TODO: there should be a better way to pass this param
-        this.justPressed = justReleased;
 
         if (input.gamepad) {
             this.pad1 = input.gamepad.pad;
@@ -42,8 +41,16 @@ export default class Controls {
             ]
         };
 
-        // allow for testing game stuff
-        // these should be disabled in production builds
+        this.states = {
+            up: new KeyState(),
+            down: new KeyState(),
+            left: new KeyState(),
+            right: new KeyState(),
+            action1: new KeyState(),
+            action2: new KeyState()
+        };
+
+        // allow for testing game stuff in no-production builds
         if (Consts.debug) {
             this.keys = {
                 ...this.keys,
@@ -52,40 +59,68 @@ export default class Controls {
         }
     }
 
-    _keyPressed(keys) {
-        for (const k of keys) {
+    // _padPressed(button) {
+    //     if (this.justPressed) {
+    //         return this.pad1.justPressed(button, 25);
+    //     }
 
-            if (this.justPressed) {
-                if (Phaser.Input.Keyboard.JustUp(k))
-                    return true;
-            } else {
-                if (k.isDown) {
-                    return true;
+    //     return this.pad1.isDown(button);
+    // }
+
+    // _stickMoved(isAxisOverTreshold) {
+    //     if (this.justPressed) {
+    //         return false;
+    //     }
+
+    //     return isAxisOverTreshold;
+    // }
+
+    _updateState(state, keys) {
+        let found = false;
+
+        for (let k of keys) {
+            if (k.isDown) {
+                found = true;
+
+                if (state.isDown) {
+                    state.pressed = false;
+                    // if (!state.isHeld) {
+                    //     state.held = {
+                    //         held: true,
+                    //         time: time
+                    //     };
+                    // }
+                } else {
+                    state.pressed = true;
+                    state.down = true;
                 }
+
+                break;
             }
-
         }
-        return false;
+
+        if (!found) {
+            if (state.isDown) {
+                state.down = false;
+                // state.held = { held: false };
+                state.released = true;
+            } else {
+                state.reset();
+            }
+        }
     }
 
-    _padPressed(button) {
-        if (this.justPressed) {
-            return this.pad1.justPressed(button, 25);
-        }
-
-        return this.pad1.isDown(button);
-    }
-
-    _stickMoved(isAxisOverTreshold) {
-        if (this.justPressed) {
-            return false;
-        }
-
-        return isAxisOverTreshold;
+    update(time, delta) {
+        this._updateState(this.states.up, this.keys.ups);
+        this._updateState(this.states.down, this.keys.downs);
+        this._updateState(this.states.left, this.keys.lefts);
+        this._updateState(this.states.right, this.keys.rights);
+        this._updateState(this.states.action1, this.keys.action1);
+        this._updateState(this.states.action2, this.keys.action2);
     }
 
     get up() {
-        return this._keyPressed(this.keys.ups);
+        return this.states.up;
         // return (
         //   this._keyPressed(this.keys.ups) ||
         //   this._padPressed(Phaser.Gamepad.XBOX360_DPAD_UP) ||
@@ -96,7 +131,7 @@ export default class Controls {
     }
 
     get down() {
-        return this._keyPressed(this.keys.downs);
+        return this.states.down;
         // return (
         //   this._keyPressed(this.keys.downs) ||
         //   this._padPressed(Phaser.Gamepad.XBOX360_DPAD_DOWN) ||
@@ -107,7 +142,7 @@ export default class Controls {
     }
 
     get left() {
-        return this._keyPressed(this.keys.lefts);
+        return this.states.left;
         // return (
         //   this._keyPressed(this.keys.lefts) ||
         //   this._padPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT) ||
@@ -118,7 +153,7 @@ export default class Controls {
     }
 
     get right() {
-        return this._keyPressed(this.keys.rights);
+        return this.states.right;
         // return (
         //   this._keyPressed(this.keys.rights) ||
         //   this._padPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT) ||
@@ -129,7 +164,7 @@ export default class Controls {
     }
 
     get action1() {
-        return this._keyPressed(this.keys.action1);
+        return this.states.action1;
         // return (
         //   this._keyPressed(this.keys.kicks) ||
         //   this._padPressed(Phaser.Gamepad.XBOX360_A)
@@ -137,7 +172,7 @@ export default class Controls {
     }
 
     get action2() {
-        return this._keyPressed(this.keys.action2);
+        return this.states.action2;
         // return (
         //   this._keyPressed(this.keys.kicks) ||
         //   this._padPressed(Phaser.Gamepad.XBOX360_A)

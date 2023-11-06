@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Consts from '../consts';
-import Controls from '../controls';
+import { Controls } from '../controls';
 
 const W = Consts.screenWidth, H = Consts.screenHeight;
 const W_2 = Consts.screenWidth * 0.5, H_2 = Consts.screenHeight * 0.5;
@@ -28,7 +28,7 @@ export class Menu extends Phaser.Scene {
 		this.ymax = 0;
 		this.menus = [];
 		this.texts = [];
-		this.controls = new Controls(this.input, true);
+		this.controls = new Controls(this.input);
 
 		this.createMainMenu();
 
@@ -47,10 +47,12 @@ export class Menu extends Phaser.Scene {
 	}
 
 	update(time, delta) {
+		this.controls.update(time);
+
 		this.tileback1.tilePositionX += 0.09;
 		this.tileback2.tilePositionX += 0.5;
 
-		if (this.controls.up) {
+		if (this.controls.up.isPressed) {
 			this.menus[this.ypos].setScale(1, 1);
 			this.menus[this.ypos].setX(MX);
 			this.tween.restart();
@@ -59,7 +61,7 @@ export class Menu extends Phaser.Scene {
 			if (this.ypos < 0) {
 				this.ypos = this.ymax;
 			}
-		} else if (this.controls.down) {
+		} else if (this.controls.down.isPressed) {
 			this.menus[this.ypos].setScale(1, 1);
 			this.menus[this.ypos].setX(MX);
 			this.tween.restart();
@@ -68,7 +70,7 @@ export class Menu extends Phaser.Scene {
 			if (this.ypos > this.ymax) {
 				this.ypos = 0;
 			}
-		} else if (this.controls.action1) {
+		} else if (this.controls.action1.isPressed) {
 			switch (this.state) {
 				case MenuStates.MAIN:
 					switch (this.ypos) {
