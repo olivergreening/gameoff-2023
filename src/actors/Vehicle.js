@@ -1,32 +1,18 @@
 import Phaser from 'phaser';
-import BaseEntity from './BaseEntity';
-import Consts from '../consts';
+import BaseActor from './BaseActor';
 
-export default class Player extends BaseEntity {
-	constructor(scene, x, y, w, h, fill) {
-		super(scene, x, y, w, h, fill);
-		this.currentLane = 0;
+export default class Player extends BaseActor {
+	constructor(scene, texture) {
+		super(scene, texture);
+		this.lane = 0;
 	}
 
-	switchLaneUp() {
-		if (this.active) {
-			if (this.currentLane < 6) {
-				this.currentLane++;
-				this.y = this.currentLane * Consts.laneHeight;
-				return;
-			}
-			return this.debug();
-		}
+	calculateLaneY(target) {
+		return 0 + target * 64;
 	}
-
-	switchLaneDown() {
-		if (this.active) {
-			if (this.active && this.currentLane > 0) {
-				this.currentLane--;
-				this.y = this.currentLane * Consts.laneHeight;
-				return;
-			}
-			return this.debug();
-		}
+	
+	setLane(target) {
+		this.lane = target;
+		this.y = this.calculateLaneY(this.lane);
 	}
 }

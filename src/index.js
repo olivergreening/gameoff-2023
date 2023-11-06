@@ -24,6 +24,9 @@ window.onload = function () {
 			Scenes.Menu,
 			Scenes.Settings,
 		],
+		render: {
+			pixelArt: true,
+		},
 	};
 
 	const game = new Phaser.Game(config);
