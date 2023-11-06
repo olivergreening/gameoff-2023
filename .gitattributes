@@ -4,3 +4,6 @@
 *.ogg filter=lfs diff=lfs merge=lfs -text
 *.tmx filter=lfs diff=lfs merge=lfs -text
 *.tmj filter=lfs diff=lfs merge=lfs -text
+
+# exclude from GH language stats
+dist/* linguist-vendored
