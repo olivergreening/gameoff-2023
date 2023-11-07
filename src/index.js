@@ -20,11 +20,10 @@ window.onload = function () {
 		scene: [
 			Scenes.Preloader,
 			Scenes.Transition,
-			Scenes.Game,
 			Scenes.Menu,
-			// todo: remove
-			Scenes.Credits,
-			Scenes.Settings,
+			Scenes.Game,
+			Scenes.Win,
+			Scenes.Lose,
 		],
 		render: {
 			pixelArt: true,
