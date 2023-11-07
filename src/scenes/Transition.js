@@ -19,7 +19,18 @@ export class Transition extends Phaser.Scene {
         this.countdownText = this.add.bitmapText(Consts.screenWidth * 0.5, Consts.screenHeight - 150, Consts.font, '', 24);
         this.countdownText.setOrigin(0.5);
 
-        this.countdownTimer = this.time.addEvent({ delay: 1000, repeat: 10 });
+        this.countdownTimer = this.time.addEvent({ delay: 1000, repeat: 11 });
+
+        this.tween = this.tweens.addCounter({
+			from: 5,
+			to: 0,
+			duration: 1000,
+			yoyo: false,
+			repeat: 10,
+			onUpdate: (tween) => {
+                this.countdownText.scale = 1 + tween.getValue();;
+			}
+		});
     }
 
     update(time, delta) {
@@ -28,9 +39,13 @@ export class Transition extends Phaser.Scene {
         if (this.controls.action1.isPressed) {
             this.scene.start('Game');
         }
-        if (this.countdownTimer.getRepeatCount() > 0) {
-            this.countdownText.setText(this.countdownTimer.getRepeatCount() + '');
-        } else {
+
+        const count = this.countdownTimer.getRepeatCount();
+        if (count > 1) {
+            this.countdownText.setText(count - 1);
+        } else if (count === 1) {
+            this.countdownText.setText('GO');
+        } else  {
             this.scene.start('Game');
         }
     }
