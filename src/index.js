@@ -19,9 +19,11 @@ window.onload = function () {
 		},
 		scene: [
 			Scenes.Preloader,
-			Scenes.Credits,
+			Scenes.Transition,
 			Scenes.Game,
 			Scenes.Menu,
+			// todo: remove
+			Scenes.Credits,
 			Scenes.Settings,
 		],
 		render: {

@@ -74,7 +74,7 @@ export class Menu extends Phaser.Scene {
 			switch (this.state) {
 				case MenuStates.MAIN:
 					switch (this.ypos) {
-						case 0: this.scene.start('Game'); break; // TODO: add transition scene
+						case 0: this.scene.start('Transition'); break;
 						case 1: this.createOptions(); break;
 						case 2: this.createHallOfFame(); break;
 						case 3: this.createCredits(); break;
