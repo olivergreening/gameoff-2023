@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Consts from '../consts';
+import Audio from '../audio';
 
 export class Preloader extends Phaser.Scene {
 	constructor() {
@@ -25,11 +26,10 @@ export class Preloader extends Phaser.Scene {
 		this.load.image('menu_bkg_2', './images/3.png');
 
 		// spritesheets
-		this.load.spritesheet('player', './sprites/Car.png', {frameWidth: 32, frameHeight: 32});
-		
-		// audio sfx
+		this.load.spritesheet('player', './sprites/Car.png', { frameWidth: 32, frameHeight: 32 });
 
-		// music
+		// audio sfx and music
+		Audio.load(this.load);
 	}
 
 	createLoadingBar() {

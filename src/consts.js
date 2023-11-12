@@ -17,8 +17,8 @@ const Consts = {
 	debug: URLOptions[`debug`],
 	debugPhysics: URLOptions[`debug_physics`],
 	showFPS: URLOptions[`show_fps`],
-	noSounds: URLOptions[`no_sound`],
-	noMusic: URLOptions[`no_music`],
+	noSounds: isStringBoolean(localStorage.getItem(`no_sound`)),
+	noMusic: isStringBoolean(localStorage.getItem(`no_music`)),
 	scene: URLOptions[`scene`],
 };
 
