@@ -24,11 +24,11 @@ class Audio {
     static load(loader) {
         Object.keys(SOUNDS).forEach(key =>
             SOUNDS[key].forEach(
-                (files, idx) => loader.audio(`${key}${idx}`, files.map(file => `../sounds/${file}`))
+                (files, idx) => loader.audio(`${key}${idx}`, files.map(file => `./sounds/${file}`))
             )
         );
 
-        Object.keys(MUSIC).forEach(key => loader.audio(key, MUSIC[key].map(file => `../music/${file}`)));
+        Object.keys(MUSIC).forEach(key => loader.audio(key, MUSIC[key].map(file => `./music/${file}`)));
     }
 
     constructor(scene) {
