@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Consts from '../consts';
+import Audio from '../audio';
 import { Controls } from '../controls';
 
 const W = Consts.screenWidth, H = Consts.screenHeight;
@@ -20,6 +21,12 @@ export class Menu extends Phaser.Scene {
 	}
 
 	create() {
+		// sfx
+		this.audio = new Audio(this);
+		this.audio.setMusicVol('music-menu', 0);
+		this.audio.playMusic('music-menu', { loop: true });
+		this.audio.fadeIn(null, { maxVol: 0.8 });
+
 		this.tileback1 = this.add.tileSprite(W_2, H_2, W, H, 'menu_bkg_1');
 		this.tileback2 = this.add.tileSprite(W_2, H - 324 * 0.5, W, 324, 'menu_bkg_2');
 		this.title = this.add.bitmapText(MX, 50, Consts.font, 'GETAWAY HEIST', TITLE_FONT_SIZE);
@@ -53,6 +60,8 @@ export class Menu extends Phaser.Scene {
 		this.tileback2.tilePositionX += 0.5;
 
 		if (this.controls.up.isPressed) {
+			this.audio.playSound('menu-move');
+
 			this.menus[this.ypos].setScale(1, 1);
 			this.menus[this.ypos].setX(MX);
 			this.tween.restart();
@@ -62,6 +71,8 @@ export class Menu extends Phaser.Scene {
 				this.ypos = this.ymax;
 			}
 		} else if (this.controls.down.isPressed) {
+			this.audio.playSound('menu-move');
+
 			this.menus[this.ypos].setScale(1, 1);
 			this.menus[this.ypos].setX(MX);
 			this.tween.restart();
@@ -71,6 +82,8 @@ export class Menu extends Phaser.Scene {
 				this.ypos = 0;
 			}
 		} else if (this.controls.action1.isPressed) {
+			this.audio.playSound('menu-select');
+
 			switch (this.state) {
 				case MenuStates.MAIN:
 					switch (this.ypos) {
@@ -85,13 +98,16 @@ export class Menu extends Phaser.Scene {
 						case 0: this.createMainMenu(); break; // go back to main
 						case 1:
 							// toggle sound
-							this.enableSound = !this.enableSound;
-							this.menus[this.ypos].text = `SOUND: ${this.enableSound ? 'ON' : 'OFF'}`;
+							this.audio.soundsOn = !this.audio.soundsOn
+							this.menus[this.ypos].text = `SOUND: ${this.audio.soundsOn ? 'ON' : 'OFF'}`;
 							break;
 						case 2:
 							// toggle music
-							this.enableMusic = !this.enableMusic;
-							this.menus[this.ypos].text = `MUSIC: ${this.enableMusic ? 'ON' : 'OFF'}`;
+							this.audio.musicOn = !this.audio.musicOn
+							this.menus[this.ypos].text = `MUSIC: ${this.audio.musicOn ? 'ON' : 'OFF'}`;
+							if (this.audio.musicOn) {
+								this.audio.playMusic('music-menu', { loop: true });
+							}
 							break;
 					}
 					break;
@@ -147,13 +163,10 @@ export class Menu extends Phaser.Scene {
 
 		this.state = MenuStates.OPTIONS;
 		this.sectionTitle = this.add.bitmapText(W - 200, MY + 19, Consts.font, 'OPTIONS', MENU_FONT_SIZE);
-		// TODO: use values from an audio class
-		this.enableSound = true;
-		this.enableMusic = true;
 		this.menus = [
 			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 140, Consts.font, 'SOUND: ON', MENU_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 190, Consts.font, 'MUSIC: ON', MENU_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 140, Consts.font, `SOUND: ${this.audio.soundsOn ? 'ON' : 'OFF'}`, MENU_FONT_SIZE),
+			this.add.bitmapText(MX, MY + 190, Consts.font, `MUSIC: ${this.audio.musicOn ? 'ON' : 'OFF'}`, MENU_FONT_SIZE),
 			// this.add.bitmapText(MX, MY + 240, Consts.font, 'GAMEPAD: ON', MENU_FONT_SIZE),
 		];
 		this.ypos = 0;
