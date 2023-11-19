@@ -2,24 +2,13 @@ import Phaser from 'phaser';
 import Consts from '../consts';
 import Utils from '../utils';
 
-const MAP_WIDTH = 50;
-const MAP_HEIGHT = 18;
-
-export class Road {
+export default class Road {
     constructor(scene) {
         this.scene = scene;
         this.currentLayerIdx = 0;
     }
 
-    generate() {
-        const scene = this.scene;
-
-        const map = scene.make.tilemap({
-            tileWidth: 16,
-            tileHeight: 16,
-            width: MAP_WIDTH * 2,
-            height: MAP_HEIGHT * 2
-        });
+    generate(map, mapTilesWidth, mapTilesHeight) {
         const tileset = map.addTilesetImage('road_tiles');
 
         const ypos = 100;
@@ -29,8 +18,8 @@ export class Road {
             map.createBlankLayer('layer3', tileset, Consts.screenWidth * 2, ypos),
         ];
 
-        for (let y = 0; y < MAP_HEIGHT; y += 3) {
-            for (let x = 0; x < MAP_WIDTH; x++) {
+        for (let y = 0; y < mapTilesHeight; y += 3) {
+            for (let x = 0; x < mapTilesWidth; x++) {
                 if (x == 0) {
                     // crossroad tiles
                     layers.forEach(l => {
