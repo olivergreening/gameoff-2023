@@ -21,6 +21,7 @@ export default class Player extends Vehicle {
 		this.minSpeed = 10;
 		this.maxSpeed = 20;
 		this.speed = this.minSpeed;
+		this.y = 16 * 10;
 	}
 
 	upLane() {
@@ -104,7 +105,7 @@ export default class Player extends Vehicle {
 			this.speed = (this.speed < 10) ? 10 : this.speed;
 		}
 
-		console.log(this.x)
+		// console.log(this.x)
 		this.x += this.speed;
 	}
 }
