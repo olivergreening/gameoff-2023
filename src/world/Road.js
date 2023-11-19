@@ -13,9 +13,9 @@ export default class Road {
 
         const ypos = 100;
         const layers = [
-            map.createBlankLayer('layer1', tileset, 0, ypos),
-            map.createBlankLayer('layer2', tileset, Consts.screenWidth, ypos),
-            map.createBlankLayer('layer3', tileset, Consts.screenWidth * 2, ypos),
+            map.createBlankLayer('layer_lanes_1', tileset, 0, ypos),
+            map.createBlankLayer('layer_lanes_2', tileset, Consts.screenWidth, ypos),
+            map.createBlankLayer('layer_lanes_3', tileset, Consts.screenWidth * 2, ypos),
         ];
 
         for (let y = 0; y < mapTilesHeight; y += 3) {
@@ -25,14 +25,14 @@ export default class Road {
                     layers.forEach(l => {
                         l.putTileAt(4, x, y);
                         l.putTileAt(4 + 6, x, y + 1);
-                        l.putTileAt(4 + 12, x, y + 2);
+                        l.putTileAt(y + 2 === mapTilesHeight ? 4 + 12 : 4 + 6, x, y + 2);
                     });
                 } else if (x == 1) {
                     // crossroad tiles
                     layers.forEach(l => {
                         l.putTileAt(5, x, y);
                         l.putTileAt(5 + 6, x, y + 1);
-                        l.putTileAt(5 + 12, x, y + 2);
+                        l.putTileAt(y + 2 === mapTilesHeight ? 5 + 12 : 5 + 6, x, y + 2);
                     });
                 } else {
                     // lane tiles
