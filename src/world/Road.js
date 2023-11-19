@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Consts from '../consts';
+import Utils from '../utils';
 
 const MAP_WIDTH = 50;
 const MAP_HEIGHT = 18;
@@ -65,11 +66,16 @@ export class Road {
 
     update(player) {
         const x = this.scene.cameras.main.worldView.centerX;
-        if (x % 800 >= 795) {
-            console.log('change', x % 800)
+        const screenWidthLimit_1 = Consts.screenWidth + Consts.screenWidth * 0.5; // 1200
+
+        if (x % screenWidthLimit_1 >= screenWidthLimit_1 - player.speed ||
+            (x % Consts.screenWidth >= Consts.screenWidth - player.speed && this.currentLayerIdx > 1)) {
+            Utils.debug('(change) road tiles layer', x % 1200)
+
             const layer = this.layers[this.currentLayerIdx];
             layer.x = layer.x + Consts.screenWidth * this.layers.length;
-            console.log(this.currentLayerIdx, layer.x)
+            Utils.debug('(change) road tiles layer', this.currentLayerIdx, layer.x)
+
             this.currentLayerIdx += 1;
             if (this.currentLayerIdx >= this.layers.length) {
                 this.currentLayerIdx = 0;
