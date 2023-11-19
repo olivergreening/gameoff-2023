@@ -24,6 +24,7 @@ export class Preloader extends Phaser.Scene {
 		// images
 		this.load.image('menu_bkg_1', './images/1.png');
 		this.load.image('menu_bkg_2', './images/3.png');
+		this.load.image('road_tiles', './sprites/tilemaps-and-additive/roadtilemap16x16.png');
 
 		// spritesheets
 		this.load.spritesheet('player', './sprites/Car.png', { frameWidth: 32, frameHeight: 32 });

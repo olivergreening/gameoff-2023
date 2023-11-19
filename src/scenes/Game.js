@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
+import Consts from '../consts';
 import Player from '../actors/Player';
+import { Road } from '../world';
 
 export class Game extends Phaser.Scene {
 	constructor() {
@@ -9,7 +11,11 @@ export class Game extends Phaser.Scene {
 	create() {
 		this.player = new Player(this, 'player');
 		this.cameras.main.startFollow(this.player);
-		this.cameras.main.setBounds(0, 0, 80000, 600);
+		this.cameras.main.setBounds(0, 0, 80000, Consts.screenHeight);
+		this.cameras.main.worldView.centerX
+		
+		this.road = new Road(this);
+		this.road.generate();
 
 		this.stripes = [];
 		
@@ -24,5 +30,7 @@ export class Game extends Phaser.Scene {
 
 	update(time, delta) {
 		this.player.update(time, delta);
+
+		this.road.update(this.player);
 	}
 }
