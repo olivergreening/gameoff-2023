@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Consts from '../consts';
+import Audio from '../audio';
 import { Controls } from '../controls';
 
 export class Transition extends Phaser.Scene {
@@ -8,6 +9,8 @@ export class Transition extends Phaser.Scene {
     }
 
     create() {
+        this.audio = new Audio(this);
+
         this.controls = new Controls(this.input);
 
         // todo: add a background image instead
@@ -27,6 +30,7 @@ export class Transition extends Phaser.Scene {
             duration: 1000,
             yoyo: false,
             repeat: 10,
+            onStart: () => this.audio.playSound('menu-select-soft'),
             onUpdate: (tween) => {
                 this.countdownText.scale = 1 + tween.getValue();
             },
@@ -40,6 +44,8 @@ export class Transition extends Phaser.Scene {
 
                 }
 
+                this.audio.playSound('menu-select-soft');
+
                 this.countdown -= 1;
             },
             onComplete: () => {
@@ -52,7 +58,10 @@ export class Transition extends Phaser.Scene {
         this.controls.update(time);
 
         if (this.controls.action1.isPressed) {
-            this.scene.start('Game');
+            this.audio.playSound('menu-select-hard');
+            this.tween.stop();
+            this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('Game'));
+            this.cameras.main.fadeOut(800, 0);
         }
     }
 }
