@@ -4,8 +4,8 @@ import Utils from '../utils';
 
 import Road from './Road';
 
-const MAP_WIDTH = 50;
-const MAP_HEIGHT = 18;
+const MAP_WIDTH = 53;
+const MAP_HEIGHT = 21;
 
 export class World {
     constructor(scene, player) {
@@ -15,13 +15,18 @@ export class World {
 
     generate() {
         const map = this.scene.make.tilemap({
-            tileWidth: 16,
-            tileHeight: 16,
+            tileWidth: Consts.tileSize,
+            tileHeight: Consts.tileSize,
             width: MAP_WIDTH * 3,
             height: MAP_HEIGHT * 3
         });
 
-        this.road = new Road(this.scene);
+        this.road = new Road(this.scene, {
+            tileWidth: Consts.tileSize,
+            tileHeight: Consts.tileSize,
+            startY: 100,
+            endY: MAP_HEIGHT * Consts.tileSize
+        });
         this.road.generate(map, MAP_WIDTH, MAP_HEIGHT);
     }
 

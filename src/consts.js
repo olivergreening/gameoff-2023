@@ -10,8 +10,12 @@ window.location.search.slice(1).split('&').map((option) => {
 const Consts = {
 	screenWidth: 800,
 	screenHeight: 600,
-
 	font: 'm6x11',
+	tileSize: 16, // pixels
+	z: {
+		roadLayer: -99,
+		decalsLayer: -98,
+	},
 
 	// dev flags passed as url parameters, e.g. `?debug=true&show_fps=true`
 	debug: URLOptions[`debug`],
