@@ -32,11 +32,11 @@ export default class RoadDecals {
         switch (Phaser.Math.Between(0, 6)) {
             case 0:
             case 1:
-                name = "crack01.png"; 
+                name = "crack01.png";
                 break;
             case 2:
             case 3:
-                name = "crack02.png"; 
+                name = "crack02.png";
                 break;
             case 4: name = "tire.png"; break;
             case 5: name = "tire2.png"; break;
@@ -47,7 +47,13 @@ export default class RoadDecals {
         const y = Phaser.Math.Between(this.config.startY, this.config.endY) + this.config.tileHeight;
         const decal = this.group.get(x, y, 'road_decals', name);
         if (decal) {
-            decal.setActive(true).setVisible(true).setDepth(Consts.z.decalsLayer);
+            const scale = Phaser.Math.Between(1, 2);
+            const flipped = Phaser.Math.Between(0, 100) > 50;
+            decal.setActive(true)
+                .setVisible(true)
+                .setDepth(Consts.z.decalsLayer)
+                .setScale(scale)
+                .setFlipX(flipped);
             Utils.debug('(decal) created at', x, y)
         }
     }
