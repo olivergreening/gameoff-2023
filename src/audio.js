@@ -1,22 +1,32 @@
 import { Math } from 'phaser';
 import Consts from './consts';
 
-const DEFAULT_FADE_INOUT = 2000;
+const DEFAULT_FADE_INOUT = 1000;
 
 let _currentMusic = null;
 
 // key => slots  => slot#
 const SOUNDS = {
     'menu-move': [
-        ['menu_move.m4a', 'menu_move.ogg']
+        ['menu_move.ogg']
     ],
-    'menu-select': [
-        ['menu_sel.m4a', 'menu_sel.ogg']
+    'menu-select-soft': [
+        ['menu_select_soft.ogg']
+    ],
+    'menu-select-hard': [
+        ['menu_select_hard.ogg']
+    ],
+    'menu-enter': [
+        ['menu_enter.ogg']
+    ],
+    'menu-exit': [
+        ['menu_exit.ogg']
     ]
 };
 
 const MUSIC = {
-    'music-menu': ['bruh-003.m4a', 'bruh-003.ogg'],
+    'music-menu': ['title_screen.m4a', 'title_screen.ogg'],
+    'music-play': ['bruh-003.m4a', 'bruh-003.ogg'],
 };
 
 class Audio {
@@ -118,7 +128,7 @@ class Audio {
             this.sounds[key][0].stop();
         } else {
             _currentMusic && _currentMusic.stop();
-            this.scene.sound.stopAll();
+            //this.scene.sound.stopAll();
         }
     }
 

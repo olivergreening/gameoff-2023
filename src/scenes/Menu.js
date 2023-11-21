@@ -25,7 +25,7 @@ export class Menu extends Phaser.Scene {
 		this.audio = new Audio(this);
 		this.audio.setMusicVol('music-menu', 0);
 		this.audio.playMusic('music-menu', { loop: true });
-		this.audio.fadeIn(null, { maxVol: 0.8 });
+		this.audio.fadeIn(null, { maxVol: 0.75 });
 
 		this.tileback1 = this.add.tileSprite(W_2, H_2, W, H, 'menu_bkg_1');
 		this.tileback2 = this.add.tileSprite(W_2, H - 324 * 0.5, W, 324, 'menu_bkg_2');
@@ -36,6 +36,7 @@ export class Menu extends Phaser.Scene {
 		this.menus = [];
 		this.texts = [];
 		this.controls = new Controls(this.input);
+		this.playTapped = false; // when PLAY gets tapped, stop menu selections
 
 		this.createMainMenu();
 
@@ -54,6 +55,10 @@ export class Menu extends Phaser.Scene {
 	}
 
 	update(time, delta) {
+		if (this.playTapped) {
+			return;
+		}
+
 		this.controls.update(time);
 
 		this.tileback1.tilePositionX += 0.09;
@@ -82,12 +87,15 @@ export class Menu extends Phaser.Scene {
 				this.ypos = 0;
 			}
 		} else if (this.controls.action1.isPressed) {
-			this.audio.playSound('menu-select');
-
 			switch (this.state) {
 				case MenuStates.MAIN:
+					this.audio.playSound('menu-enter');
 					switch (this.ypos) {
-						case 0: this.scene.start('Transition'); break;
+						case 0:
+							this.playTapped = true;
+							this.audio.fadeOut(() => this.scene.start('Transition'));
+							this.cameras.main.fadeOut(1000, 0);
+							break;
 						case 1: this.createOptions(); break;
 						case 2: this.createHallOfFame(); break;
 						case 3: this.createCredits(); break;
@@ -95,30 +103,54 @@ export class Menu extends Phaser.Scene {
 					break;
 				case MenuStates.OPTIONS:
 					switch (this.ypos) {
-						case 0: this.createMainMenu(); break; // go back to main
+						case 0:
+							this.audio.playSound('menu-exit');
+							this.createMainMenu(); // go back to main
+							break;
 						case 1:
 							// toggle sound
+							if (this.audio.soundsOn) {
+								this.audio.playSound('menu-exit');
+							}
 							this.audio.soundsOn = !this.audio.soundsOn
 							this.menus[this.ypos].text = `SOUND: ${this.audio.soundsOn ? 'ON' : 'OFF'}`;
+
+							if (this.audio.soundsOn) {
+								this.audio.playSound('menu-enter');
+							}
 							break;
 						case 2:
 							// toggle music
+							if (this.audio.musicOn) {
+								this.audio.playSound('menu-exit');
+							}
+
 							this.audio.musicOn = !this.audio.musicOn
 							this.menus[this.ypos].text = `MUSIC: ${this.audio.musicOn ? 'ON' : 'OFF'}`;
 							if (this.audio.musicOn) {
 								this.audio.playMusic('music-menu', { loop: true });
+							}
+
+							if (this.audio.musicOn) {
+								this.audio.playSound('menu-enter');
 							}
 							break;
 					}
 					break;
 				case MenuStates.HALL_OF_FAME:
 					switch (this.ypos) {
-						case 0: this.createMainMenu(); break; // go back to main
+						case 0:
+							this.audio.playSound('menu-exit');
+							this.createMainMenu(); // go back to main
+							break;
 					}
 					break;
 				case MenuStates.CREDITS:
 					switch (this.ypos) {
-						case 0: this.createMainMenu(); break; // go back to main
+						case 0:
+							this.audio.playSound('menu-exit');
+							this.createMainMenu();  // go back to main
+							break;
 					}
 					break;
 			}
