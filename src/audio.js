@@ -49,8 +49,8 @@ class Audio {
         Object.keys(SOUNDS).forEach(key => this.sounds[key] = SOUNDS[key].map((_, idx) => scene.sound.add(`${key}${idx}`)));
         Object.keys(MUSIC).forEach(key => this.music[key] = scene.sound.add(key));
 
-        this._soundsOn = Consts.noSounds == false;
-        this._musicOn = Consts.noMusic == false;
+        this._soundsOn = !localStorage.getItem(`no_sound`) || localStorage.getItem(`no_sound`) === 'false';
+        this._musicOn = !localStorage.getItem(`no_music`) || localStorage.getItem(`no_music`) === 'false';
     }
 
     playSound(name, config) {
