@@ -18,7 +18,6 @@ export class Game extends Phaser.Scene {
 
 		this.cameras.main.startFollow(this.player);
 		this.cameras.main.setBounds(0, 0, 80000, Consts.screenHeight);
-		this.cameras.main.worldView.centerX
 
 		this.world = new World(this, this.player);
 		this.world.generate();
