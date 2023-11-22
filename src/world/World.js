@@ -4,8 +4,8 @@ import Utils from '../utils';
 
 import Road from './Road';
 
-const MAP_WIDTH = 53;
-const MAP_HEIGHT = 21;
+const MAP_WIDTH = 50;
+const MAP_HEIGHT = 20;
 
 export class World {
     constructor(scene, player) {
@@ -24,7 +24,7 @@ export class World {
         this.road = new Road(this.scene, {
             tileWidth: Consts.tileSize,
             tileHeight: Consts.tileSize,
-            startY: 100,
+            startY: 58, // this is the y-pos where the lanes start from
             endY: MAP_HEIGHT * Consts.tileSize
         });
         this.road.generate(map, MAP_WIDTH, MAP_HEIGHT);
