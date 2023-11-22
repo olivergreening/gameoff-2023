@@ -2,8 +2,8 @@ import Phaser from 'phaser';
 import BaseActor from './BaseActor';
 
 export default class Player extends BaseActor {
-	constructor(scene, texture) {
-		super(scene, texture);
+	constructor(scene) {
+		super(scene);
 		this.lane = 0;
 	}
 

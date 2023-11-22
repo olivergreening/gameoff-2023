@@ -25,19 +25,18 @@ export default class Player extends Vehicle {
 		this.money = 0;
 		
 		this.init();
-		this.createAnimations();
 	}
 
 	init() {
 		this.x = 400;
 		this.setLane(0);
-		this.setOrigin(.5, 0);
+		this.setOrigin(0, 1);
 		this.setTexture('player_car');
 		this.setFrame(0);
+		this.createAnimations();
 	}
 	
 	createAnimations() {
-		this.currentAnimation = 0;
 		this.animations = [
 			{
 				key: 'bigTransform',
@@ -92,8 +91,7 @@ export default class Player extends Vehicle {
 	
 	setAnimation(target) {
 		if (target >= 0 && target <= this.animations.length) {
-			this.currentAnimation = target;
-			this.play(this.animations[this.currentAnimation].key);
+			this.play(this.animations[target].key);
 		}
 	}
 	
@@ -146,7 +144,7 @@ export default class Player extends Vehicle {
 	}
 
 	downLane() {
-		if (this.lane < 3) {
+		if (this.lane < 5) {
 			const target = this.lane + 1;
 			const tween = {
 				targets: this,
@@ -180,7 +178,7 @@ export default class Player extends Vehicle {
 
 	update(time, delta) {
 		this.controls.update(time);
-
+		
 		if (this.states.isLaneSwitchAllowed) {
 			if (this.controls.up.isPressed) {
 				this.upLane();
