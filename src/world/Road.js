@@ -18,7 +18,7 @@ export default class Road {
         this.top.setScrollFactor(0, 0);
         this.top.setDepth(Consts.z.roadLayer);
 
-        this.bottom = this.scene.add.rectangle(0, Consts.tileSize * mapTilesHeight, 
+        this.bottom = this.scene.add.rectangle(0, Consts.tileSize * mapTilesHeight,
             Consts.screenWidth * 2, Consts.screenHeight * 2 - Consts.tileSize * mapTilesHeight, 0xececec);
         this.bottom.setScrollFactor(0, 0);
         this.bottom.setDepth(Consts.z.roadLayer);

@@ -26,6 +26,7 @@ export class Preloader extends Phaser.Scene {
 		this.load.image('menu_bkg_2', './images/3.png');
 		this.load.image('road_tiles', './sprites/tilemaps-and-additives/road-tilemap-16x16.png');
 		this.load.atlas('road_decals', './sprites/decals/all-decals.png', './sprites/decals/all-decals.json');
+		this.load.atlas('road_weeds', './sprites/tilemaps-and-additives/weeds.png', './sprites/tilemaps-and-additives/weeds.json');
 		this.load.image('police_car', './sprites/cars/police-car-78x78.png');
 		this.load.image('police_big_car', './sprites/cars/police-big-car-78x78.png');
 		this.load.image('couple_car', './sprites/cars/couple-car-78x78.png');
@@ -33,7 +34,7 @@ export class Preloader extends Phaser.Scene {
 		this.load.image('mini_car', './sprites/cars/mini-car-78x78.png');
 		this.load.image('muscle_car', './sprites/cars/muscle-car-78x78.png');
 		this.load.image('sedan_car', './sprites/cars/sedan-car-78x78.png');
-		
+
 		// spritesheets
 		this.load.spritesheet('player_car', './sprites/cars/player-car-78x78.png', { frameWidth: 76, frameHeight: 76 });
 		this.load.spritesheet('smoke_begin', './sprites/particles/smoke-particle-begin-48x64.png', { frameWidth: 48, frameHeight: 64 });
