@@ -4,7 +4,7 @@ export default class BaseActor extends Phaser.GameObjects.Sprite {
 	constructor(scene) {
 		super(scene, 0, 0);
 		scene.add.existing(this);
-		
+
 		this.health = 100;
 	}
 
@@ -13,6 +13,6 @@ export default class BaseActor extends Phaser.GameObjects.Sprite {
 			this.health = target;
 		}
 	}
-	
+
 	debug() {}
 }

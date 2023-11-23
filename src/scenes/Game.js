@@ -26,7 +26,7 @@ export class Game extends Phaser.Scene {
 	gameOver() {
 		this.scene.start('Lose');
 	}
-	
+
 	update(time, delta) {
 		this.player.update(time, delta);
 		this.world.update(time, delta);

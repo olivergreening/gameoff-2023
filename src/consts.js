@@ -1,11 +1,13 @@
-
 const isStringBoolean = (item) => item === `true`;
 
 const URLOptions = {};
-window.location.search.slice(1).split('&').map((option) => {
-	const keyValue = option.split('=');
-	URLOptions[keyValue[0]] = isStringBoolean(keyValue[1]) || keyValue[1];
-});
+window.location.search
+	.slice(1)
+	.split('&')
+	.map((option) => {
+		const keyValue = option.split('=');
+		URLOptions[keyValue[0]] = isStringBoolean(keyValue[1]) || keyValue[1];
+	});
 
 const Consts = {
 	screenWidth: 800,

@@ -6,30 +6,30 @@ import { Controls } from '../controls';
 export default class Police extends Vehicle {
 	constructor(scene, player) {
 		super(scene);
-		
+
 		this.player = player;
-		
+
 		this.states = {
-			isLaneSwitchAllowed: true,	
+			isLaneSwitchAllowed: true,
 		};
-		
+
 		this.speed = 10;
-		
+
 		this.init();
 	}
-	
+
 	init() {
 		this.x = 0;
 		this.setLane(0);
 		this.setOrigin(0, 1);
-		
+
 		if (Phaser.Math.Between(0, 1) == 0) {
 			this.setTexture('police_car');
 		} else {
 			this.setTexture('police_big_car');
 		}
 	}
-	
+
 	upLane() {
 		if (this.lane > 0) {
 			const target = this.lane - 1;
@@ -50,7 +50,7 @@ export default class Police extends Vehicle {
 			this.scene.tweens.add(tween);
 			return;
 		}
-		
+
 		return;
 	}
 
@@ -77,7 +77,7 @@ export default class Police extends Vehicle {
 
 		return;
 	}
-	
+
 	update(time, delta) {
 		this.x += this.speed;
 		if (this.player.lane != this.lane) {
