@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 permissions:
   contents: read
   pages: write
@@ -11,13 +11,13 @@ jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }}
     environment:
-     name: github-pages
-     url: ${{ steps.deployment.outputs.page_url }}  
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          lfs: 'true'      
+          lfs: 'true'
       - uses: actions/setup-node@v3
         with:
           node-version: 18

@@ -15,15 +15,15 @@ export default class Player extends Vehicle {
 			isBig: false,
 		};
 
-		this.brakingSpeed = .2;
-		this.accelerationSpeed = .1;
-		this.decelerationSpeed = .1;
+		this.brakingSpeed = 0.2;
+		this.accelerationSpeed = 0.1;
+		this.decelerationSpeed = 0.1;
 		this.minSpeed = 10;
 		this.maxSpeed = 20;
 		this.speed = this.minSpeed;
-		
+
 		this.money = 0;
-		
+
 		this.init();
 	}
 
@@ -35,12 +35,14 @@ export default class Player extends Vehicle {
 		this.setFrame(0);
 		this.createAnimations();
 	}
-	
+
 	createAnimations() {
 		this.animations = [
 			{
 				key: 'bigTransform',
-				frames: this.anims.generateFrameNumbers('player_car', { frames: [7, 6, 5, 4, 3, 2, 1, 0] }),
+				frames: this.anims.generateFrameNumbers('player_car', {
+					frames: [7, 6, 5, 4, 3, 2, 1, 0],
+				}),
 				duration: 500,
 				repeat: 0,
 			},
@@ -61,7 +63,9 @@ export default class Player extends Vehicle {
 			},
 			{
 				key: 'smallTransform',
-				frames: this.anims.generateFrameNumbers('player_car', { frames: [0, 1, 2, 3, 4, 5, 6, 7] }),
+				frames: this.anims.generateFrameNumbers('player_car', {
+					frames: [0, 1, 2, 3, 4, 5, 6, 7],
+				}),
 				duration: 500,
 				repeat: 0,
 			},
@@ -80,38 +84,38 @@ export default class Player extends Vehicle {
 				frames: this.anims.generateFrameNumbers('player_car', { frames: [13] }),
 				repeat: -1,
 			},
-		]; 
+		];
 
 		for (const animation of this.animations) {
 			this.anims.create(animation);
 		}
-		
+
 		this.setAnimationToFoward();
 	}
-	
+
 	setAnimation(target) {
 		if (target >= 0 && target <= this.animations.length) {
 			this.play(this.animations[target].key);
 		}
 	}
-	
+
 	setAnimationToFoward() {
-		const target = (this.states.isBig) ? 1 : 5;
+		const target = this.states.isBig ? 1 : 5;
 		this.setAnimation(target);
 	}
 
 	setAnimationToUp() {
-		const target = (this.states.isBig) ? 2 : 6;
+		const target = this.states.isBig ? 2 : 6;
 		this.setAnimation(target);
 	}
 
 	setAnimationToDown() {
-		const target = (this.states.isBig) ? 3 : 7;
+		const target = this.states.isBig ? 3 : 7;
 		this.setAnimation(target);
 	}
 
 	setAnimationToTransform() {
-		const target = (this.states.isBig) ? 0 : 4;
+		const target = this.states.isBig ? 0 : 4;
 		this.setAnimation(target);
 	}
 
@@ -139,7 +143,7 @@ export default class Player extends Vehicle {
 		}
 
 		// TODO: add sound effect
-		this.scene.cameras.main.shake(200, .01);
+		this.scene.cameras.main.shake(200, 0.01);
 		return;
 	}
 
@@ -167,7 +171,7 @@ export default class Player extends Vehicle {
 		}
 
 		// TODO: add sound effect
-		this.scene.cameras.main.shake(200, .01);
+		this.scene.cameras.main.shake(200, 0.01);
 		return;
 	}
 
@@ -178,7 +182,7 @@ export default class Player extends Vehicle {
 
 	update(time, delta) {
 		this.controls.update(time);
-		
+
 		if (this.states.isLaneSwitchAllowed) {
 			if (this.controls.up.isPressed) {
 				this.upLane();
@@ -190,22 +194,22 @@ export default class Player extends Vehicle {
 		if (this.states.isBraking) {
 			if (this.controls.left.isDown) {
 				this.speed -= this.brakingSpeed;
-				this.speed = (this.speed < 10) ? 10 : this.speed;
+				this.speed = this.speed < 10 ? 10 : this.speed;
 			} else {
 				this.states.isBraking = false;
 			}
 		} else {
 			if (this.controls.right.isDown) {
 				this.speed += this.accelerationSpeed;
-				this.speed = (this.speed > this.maxSpeed) ? this.maxSpeed : this.speed;
-			} else if (this.controls.left.isDown) { 
+				this.speed = this.speed > this.maxSpeed ? this.maxSpeed : this.speed;
+			} else if (this.controls.left.isDown) {
 				this.states.isBraking = true;
 			} else {
 				this.speed -= this.decelerationSpeed;
-				this.speed = (this.speed < 10) ? 10 : this.speed;
+				this.speed = this.speed < 10 ? 10 : this.speed;
 			}
 		}
-		
+
 		if (this.controls.action1.isPressed) {
 			this.switchSize();
 		}

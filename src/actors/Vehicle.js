@@ -10,7 +10,7 @@ export default class Player extends BaseActor {
 	calculateLaneY(target) {
 		return 100 + target * 76;
 	}
-	
+
 	setLane(target) {
 		this.lane = target;
 		this.y = this.calculateLaneY(this.lane);

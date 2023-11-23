@@ -3,10 +3,15 @@ import Consts from '../consts';
 import Audio from '../audio';
 import { Controls } from '../controls';
 
-const W = Consts.screenWidth, H = Consts.screenHeight;
-const W_2 = Consts.screenWidth * 0.5, H_2 = Consts.screenHeight * 0.5;
-const MX = 60, MY = 50; // initial title and menu positions
-const TITLE_FONT_SIZE = 64, MENU_FONT_SIZE = 38, TEXT_FONT_SIZE = 24;
+const W = Consts.screenWidth,
+	H = Consts.screenHeight;
+const W_2 = Consts.screenWidth * 0.5,
+	H_2 = Consts.screenHeight * 0.5;
+const MX = 60,
+	MY = 50; // initial title and menu positions
+const TITLE_FONT_SIZE = 64,
+	MENU_FONT_SIZE = 38,
+	TEXT_FONT_SIZE = 24;
 
 const MenuStates = {
 	MAIN: 1,
@@ -28,8 +33,20 @@ export class Menu extends Phaser.Scene {
 		this.audio.fadeIn(null, { maxVol: 0.75 });
 
 		this.tileback1 = this.add.tileSprite(W_2, H_2, W, H, 'menu_bkg_1');
-		this.tileback2 = this.add.tileSprite(W_2, H - 324 * 0.5, W, 324, 'menu_bkg_2');
-		this.title = this.add.bitmapText(MX, 50, Consts.font, 'GETAWAY HEIST', TITLE_FONT_SIZE);
+		this.tileback2 = this.add.tileSprite(
+			W_2,
+			H - 324 * 0.5,
+			W,
+			324,
+			'menu_bkg_2',
+		);
+		this.title = this.add.bitmapText(
+			MX,
+			50,
+			Consts.font,
+			'GETAWAY HEIST',
+			TITLE_FONT_SIZE,
+		);
 
 		this.ypos = 0; // first menu option pre-selected
 		this.ymax = 0;
@@ -50,7 +67,7 @@ export class Menu extends Phaser.Scene {
 			onUpdate: (tween) => {
 				this.menus[this.ypos].scale = 1 + tween.getValue();
 				this.menus[this.ypos].x = MX + tween.getValue() * 60;
-			}
+			},
 		});
 	}
 
@@ -96,9 +113,15 @@ export class Menu extends Phaser.Scene {
 							this.audio.fadeOut(() => this.scene.start('Transition'));
 							this.cameras.main.fadeOut(1000, 0);
 							break;
-						case 1: this.createOptions(); break;
-						case 2: this.createHallOfFame(); break;
-						case 3: this.createCredits(); break;
+						case 1:
+							this.createOptions();
+							break;
+						case 2:
+							this.createHallOfFame();
+							break;
+						case 3:
+							this.createCredits();
+							break;
 					}
 					break;
 				case MenuStates.OPTIONS:
@@ -112,8 +135,10 @@ export class Menu extends Phaser.Scene {
 							if (this.audio.soundsOn) {
 								this.audio.playSound('menu-exit');
 							}
-							this.audio.soundsOn = !this.audio.soundsOn
-							this.menus[this.ypos].text = `SOUND: ${this.audio.soundsOn ? 'ON' : 'OFF'}`;
+							this.audio.soundsOn = !this.audio.soundsOn;
+							this.menus[this.ypos].text = `SOUND: ${
+								this.audio.soundsOn ? 'ON' : 'OFF'
+							}`;
 
 							if (this.audio.soundsOn) {
 								this.audio.playSound('menu-enter');
@@ -125,8 +150,10 @@ export class Menu extends Phaser.Scene {
 								this.audio.playSound('menu-exit');
 							}
 
-							this.audio.musicOn = !this.audio.musicOn
-							this.menus[this.ypos].text = `MUSIC: ${this.audio.musicOn ? 'ON' : 'OFF'}`;
+							this.audio.musicOn = !this.audio.musicOn;
+							this.menus[this.ypos].text = `MUSIC: ${
+								this.audio.musicOn ? 'ON' : 'OFF'
+							}`;
 							if (this.audio.musicOn) {
 								this.audio.playMusic('music-menu', { loop: true });
 							}
@@ -149,7 +176,7 @@ export class Menu extends Phaser.Scene {
 					switch (this.ypos) {
 						case 0:
 							this.audio.playSound('menu-exit');
-							this.createMainMenu();  // go back to main
+							this.createMainMenu(); // go back to main
 							break;
 					}
 					break;
@@ -162,10 +189,10 @@ export class Menu extends Phaser.Scene {
 			this.sectionTitle.destroy();
 		}
 		if (this.menus) {
-			this.menus.forEach(text => text.destroy());
+			this.menus.forEach((text) => text.destroy());
 		}
 		if (this.texts) {
-			this.texts.forEach(text => text.destroy());
+			this.texts.forEach((text) => text.destroy());
 		}
 		if (this.tween) {
 			this.tween.stop();
@@ -179,8 +206,14 @@ export class Menu extends Phaser.Scene {
 		this.menus = [
 			this.add.bitmapText(MX, MY + 140, Consts.font, 'PLAY', MENU_FONT_SIZE),
 			this.add.bitmapText(MX, MY + 190, Consts.font, 'OPTIONS', MENU_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 240, Consts.font, 'HALL OF FAME', MENU_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 290, Consts.font, 'CREDITS', MENU_FONT_SIZE)
+			this.add.bitmapText(
+				MX,
+				MY + 240,
+				Consts.font,
+				'HALL OF FAME',
+				MENU_FONT_SIZE,
+			),
+			this.add.bitmapText(MX, MY + 290, Consts.font, 'CREDITS', MENU_FONT_SIZE),
 		];
 		this.ypos = 0;
 		this.ymax = 3;
@@ -194,11 +227,29 @@ export class Menu extends Phaser.Scene {
 		this.clearMenu();
 
 		this.state = MenuStates.OPTIONS;
-		this.sectionTitle = this.add.bitmapText(W - 200, MY + 19, Consts.font, 'OPTIONS', MENU_FONT_SIZE);
+		this.sectionTitle = this.add.bitmapText(
+			W - 200,
+			MY + 19,
+			Consts.font,
+			'OPTIONS',
+			MENU_FONT_SIZE,
+		);
 		this.menus = [
 			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 140, Consts.font, `SOUND: ${this.audio.soundsOn ? 'ON' : 'OFF'}`, MENU_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 190, Consts.font, `MUSIC: ${this.audio.musicOn ? 'ON' : 'OFF'}`, MENU_FONT_SIZE),
+			this.add.bitmapText(
+				MX,
+				MY + 140,
+				Consts.font,
+				`SOUND: ${this.audio.soundsOn ? 'ON' : 'OFF'}`,
+				MENU_FONT_SIZE,
+			),
+			this.add.bitmapText(
+				MX,
+				MY + 190,
+				Consts.font,
+				`MUSIC: ${this.audio.musicOn ? 'ON' : 'OFF'}`,
+				MENU_FONT_SIZE,
+			),
 			// this.add.bitmapText(MX, MY + 240, Consts.font, 'GAMEPAD: ON', MENU_FONT_SIZE),
 		];
 		this.ypos = 0;
@@ -213,9 +264,15 @@ export class Menu extends Phaser.Scene {
 		this.clearMenu();
 
 		this.state = MenuStates.HALL_OF_FAME;
-		this.sectionTitle = this.add.bitmapText(W - 240, MY + 19, Consts.font, 'HALL OF FAME', MENU_FONT_SIZE);
+		this.sectionTitle = this.add.bitmapText(
+			W - 240,
+			MY + 19,
+			Consts.font,
+			'HALL OF FAME',
+			MENU_FONT_SIZE,
+		);
 		this.menus = [
-			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE)
+			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE),
 		];
 		this.ypos = 0;
 		this.ymax = 0;
@@ -229,23 +286,77 @@ export class Menu extends Phaser.Scene {
 		this.clearMenu();
 
 		this.state = MenuStates.CREDITS;
-		this.sectionTitle = this.add.bitmapText(W - 200, MY + 19, Consts.font, 'CREDITS', MENU_FONT_SIZE);
+		this.sectionTitle = this.add.bitmapText(
+			W - 200,
+			MY + 19,
+			Consts.font,
+			'CREDITS',
+			MENU_FONT_SIZE,
+		);
 		this.menus = [
-			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE)
+			this.add.bitmapText(MX, H - 90, Consts.font, 'BACK', MENU_FONT_SIZE),
 		];
 		this.ypos = 0;
 		this.ymax = 0;
 
 		this.texts = [
 			this.add.bitmapText(MX, MY + 120, Consts.font, 'gfx:', TEXT_FONT_SIZE),
-			this.add.bitmapText(MX + 20, MY + 150, Consts.font, 'BeshkekArt, beshkekart.itch.io', TEXT_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 190, Consts.font, 'programming:', TEXT_FONT_SIZE),
-			this.add.bitmapText(MX + 20, MY + 220, Consts.font, 'Oliver Greening', TEXT_FONT_SIZE),
-			this.add.bitmapText(MX + 20, MY + 250, Consts.font, 'Petar Petrov', TEXT_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 290, Consts.font, 'music/sfx:', TEXT_FONT_SIZE),
-			this.add.bitmapText(MX + 20, MY + 320, Consts.font, 'Warren Corkscrew, soundcloud.com/warren-corkscrew', TEXT_FONT_SIZE),
-			this.add.bitmapText(MX, MY + 360, Consts.font, 'voice acting:', TEXT_FONT_SIZE),
-			this.add.bitmapText(MX + 20, MY + 390, Consts.font, 'Patryk Sokol, Sokolsoundworks.com', TEXT_FONT_SIZE)
+			this.add.bitmapText(
+				MX + 20,
+				MY + 150,
+				Consts.font,
+				'BeshkekArt, beshkekart.itch.io',
+				TEXT_FONT_SIZE,
+			),
+			this.add.bitmapText(
+				MX,
+				MY + 190,
+				Consts.font,
+				'programming:',
+				TEXT_FONT_SIZE,
+			),
+			this.add.bitmapText(
+				MX + 20,
+				MY + 220,
+				Consts.font,
+				'Oliver Greening',
+				TEXT_FONT_SIZE,
+			),
+			this.add.bitmapText(
+				MX + 20,
+				MY + 250,
+				Consts.font,
+				'Petar Petrov',
+				TEXT_FONT_SIZE,
+			),
+			this.add.bitmapText(
+				MX,
+				MY + 290,
+				Consts.font,
+				'music/sfx:',
+				TEXT_FONT_SIZE,
+			),
+			this.add.bitmapText(
+				MX + 20,
+				MY + 320,
+				Consts.font,
+				'Warren Corkscrew, soundcloud.com/warren-corkscrew',
+				TEXT_FONT_SIZE,
+			),
+			this.add.bitmapText(
+				MX,
+				MY + 360,
+				Consts.font,
+				'voice acting:',
+				TEXT_FONT_SIZE,
+			),
+			this.add.bitmapText(
+				MX + 20,
+				MY + 390,
+				Consts.font,
+				'Patryk Sokol, Sokolsoundworks.com',
+				TEXT_FONT_SIZE,
+			),
 		];
 
 		if (this.tween) {

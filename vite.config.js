@@ -1,6 +1,6 @@
 export default {
 	base: './',
 	build: {
-		assetsInlineLimit: 0
+		assetsInlineLimit: 0,
 	},
 };
