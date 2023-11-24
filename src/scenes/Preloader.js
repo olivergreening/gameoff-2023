@@ -42,8 +42,8 @@ export class Preloader extends Phaser.Scene {
 			'./sprites/tilemaps-and-additives/weeds.png',
 			'./sprites/tilemaps-and-additives/weeds.json',
 		);
-		this.load.image('police_car', './sprites/cars/police-car-76x76.png');
-		this.load.image('police_big_car', './sprites/cars/police-big-car-76x76.png');
+		this.load.image('police_car', './sprites/cars/cop-car-76x76.png');
+		this.load.image('police_big_car', './sprites/cars/cop-big-car-76x76.png');
 		this.load.image('couple_car', './sprites/cars/couple-car-76x76.png');
 		this.load.image('ice_cream_car', './sprites/cars/ice-cream-car-76x76.png');
 		this.load.image('mini_car', './sprites/cars/mini-car-76x76.png');
