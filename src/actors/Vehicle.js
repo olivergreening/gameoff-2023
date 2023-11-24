@@ -4,6 +4,7 @@ import BaseActor from './BaseActor';
 export default class Player extends BaseActor {
 	constructor(scene) {
 		super(scene);
+
 		this.lane = 0;
 	}
 
