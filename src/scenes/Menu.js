@@ -78,8 +78,8 @@ export class Menu extends Phaser.Scene {
 
 		this.controls.update(time);
 
-		this.tileback1.tilePositionX += 0.09;
-		this.tileback2.tilePositionX += 0.5;
+		this.tileback1.tilePositionX += 0.1;
+		this.tileback2.tilePositionX -= 0.5;
 
 		if (this.controls.up.isPressed) {
 			this.audio.playSound('menu-move');
@@ -136,9 +136,8 @@ export class Menu extends Phaser.Scene {
 								this.audio.playSound('menu-exit');
 							}
 							this.audio.soundsOn = !this.audio.soundsOn;
-							this.menus[this.ypos].text = `SOUND: ${
-								this.audio.soundsOn ? 'ON' : 'OFF'
-							}`;
+							this.menus[this.ypos].text = `SOUND: ${this.audio.soundsOn ? 'ON' : 'OFF'
+								}`;
 
 							if (this.audio.soundsOn) {
 								this.audio.playSound('menu-enter');
@@ -151,9 +150,8 @@ export class Menu extends Phaser.Scene {
 							}
 
 							this.audio.musicOn = !this.audio.musicOn;
-							this.menus[this.ypos].text = `MUSIC: ${
-								this.audio.musicOn ? 'ON' : 'OFF'
-							}`;
+							this.menus[this.ypos].text = `MUSIC: ${this.audio.musicOn ? 'ON' : 'OFF'
+								}`;
 							if (this.audio.musicOn) {
 								this.audio.playMusic('music-menu', { loop: true });
 							}
