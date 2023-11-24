@@ -20,17 +20,17 @@ export default class Police extends Vehicle {
 
 	init() {
 		this.x = 0;
-		this.setLane(0);
+		this.y = 0;
+		this.setLane(1);
 		this.setOrigin(0, 1);
 
-		if (1 == 1) {
-			this.setSize(52, 32, 13, 23);
-			this.setDisplayOrigin(9, 32);
-			this.setTexture('police_car');
-		} else {
-			this.setSize(50, 38, 14, 18);
-			this.setDisplayOrigin(9, 36.5);
-			this.setTexture('police_big_car');
+		switch (Phaser.Math.Between(0, 1)) {
+			case 0:
+				this.setTexture('police_car');
+			break;
+			case 1:
+				this.setTexture('police_big_car');
+			break;
 		}
 	}
 
@@ -54,8 +54,6 @@ export default class Police extends Vehicle {
 			this.scene.tweens.add(tween);
 			return;
 		}
-
-		return;
 	}
 
 	downLane() {
@@ -78,8 +76,6 @@ export default class Police extends Vehicle {
 			this.scene.tweens.add(tween);
 			return;
 		}
-
-		return;
 	}
 
 	update(time, delta) {

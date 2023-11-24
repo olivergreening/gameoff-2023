@@ -19,8 +19,12 @@ export default class Player extends Vehicle {
 		this.brakingSpeed = 0.2;
 		this.accelerationSpeed = 0.1;
 		this.decelerationSpeed = 0.1;
-		this.minSpeed = 8;
-		this.maxSpeed = 12;
+		this.minSpeedForSmall = 8;
+		this.maxSpeedForSmall = 12;
+		this.minSpeedForBig = 6;
+		this.maxSpeedForBig = 10;
+		this.minSpeed = this.minSpeedForSmall;
+		this.maxSpeed = this.maxSpeedForSmall;
 		this.speed = this.minSpeed;
 
 		this.money = 0;
@@ -31,7 +35,7 @@ export default class Player extends Vehicle {
 	init() {
 		this.x = 400;
 		this.setLane(0);
-		this.setOrigin(0, 1);
+		this.setOrigin(0, .7);
 		this.setTexture('player_car');
 		this.setFrame(0);
 		this.createAnimations();
@@ -177,6 +181,14 @@ export default class Player extends Vehicle {
 	switchSize() {
 		this.setAnimationToTransform();
 		this.states.isBig = !this.states.isBig;
+		
+		if (this.states.isBig) {
+			this.minSpeed = this.minSpeedForBig;
+			this.maxSpeed = this.maxSpeedForBig;
+		} else {
+			this.minSpeed = this.minSpeedForSmall;
+			this.maxSpeed = this.maxSpeedForSmall;
+		}
 	}
 
 	update(time, delta) {

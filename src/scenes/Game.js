@@ -6,7 +6,7 @@ import Police from '../actors/Police';
 import { World } from '../world';
 
 const MAX_POLICE = 1;
-const MAX_NPC = 1;
+const MAX_NPC = 50;
 
 export class Game extends Phaser.Scene {
 	constructor() {
@@ -18,19 +18,27 @@ export class Game extends Phaser.Scene {
 		this.npcs = [];
 		this.police = [];
 
-		for (let i = 0; i < MAX_NPC; i++) {
-			const npc = new Npc(this);
-			this.npcs.push(npc);
+		let npcX;
+		
+		for (let lane = 0; lane < Consts.lanes + 1; lane++) {
+			for (let i = 0; i < MAX_NPC; i++) {
+				const npc = new Npc(this, this.player);
+				npc.x = Math.random() * (Consts.worldWidth - 0) + 0;
+				npc.setLane(lane);
+				npc.speed *= Math.random() * (1.05 - 0.95) + 0.95;
+				this.npcs.push(npc);
+				npcX = npc.x;
+			}
 		}
+		
 		
 		for (let i = 0; i < MAX_POLICE; i++) {
 			const police = new Police(this, this.player);
-			police.setLane(1);
 			this.police.push(police);
 		}
 		
 		this.cameras.main.startFollow(this.player);
-		this.cameras.main.setBounds(0, 0, 40000, Consts.screenHeight);
+		this.cameras.main.setBounds(0, 0, Consts.worldWidth, Consts.screenHeight);
 
 		this.world = new World(this, this.player);
 		this.world.generate();
