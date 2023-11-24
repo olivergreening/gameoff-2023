@@ -1,13 +1,15 @@
 import Phaser from 'phaser';
 import Vehicle from './Vehicle';
+import Consts from '../consts.js';
 import Audio from '../audio';
 import { Controls } from '../controls';
 
 export default class Npc extends Vehicle {
-	constructor(scene) {
+	constructor(scene, player) {
 		super(scene);
 
-		this.speed = 10;
+		this.player = player;
+		this.speed = 8;
 
 		this.init();
 	}
@@ -37,6 +39,54 @@ export default class Npc extends Vehicle {
 		}
 	}
 
+	upLane() {
+		if (this.lane > 0) {
+			const target = this.lane - 1;
+			const tween = {
+				targets: this,
+				y: this.calculateLaneY(target),
+				duration: 200,
+				ease: 'Quadratic.In',
+				onStart: () => {
+					this.states.isLaneSwitchAllowed = false;
+					this.setAnimationToUp();
+				},
+				onComplete: () => {
+					this.setAnimationToFoward();
+					this.setLane(target);
+					this.states.isLaneSwitchAllowed = true;
+				},
+			};
+
+			this.scene.tweens.add(tween);
+			return;
+		}
+	}
+
+	downLane() {
+		if (this.lane < Consts.lanes) {
+			const target = this.lane + 1;
+			const tween = {
+				targets: this,
+				y: this.calculateLaneY(target),
+				duration: 200,
+				ease: 'Quadratic.In',
+				onStart: () => {
+					this.states.isLaneSwitchAllowed = false;
+					this.setAnimationToDown();
+				},
+				onComplete: () => {
+					this.setAnimationToFoward();
+					this.setLane(target);
+					this.states.isLaneSwitchAllowed = true;
+				},
+			};
+
+			this.scene.tweens.add(tween);
+			return;
+		}
+	}
+	
 	update(time, delta) {
 		this.x += this.speed;
 	}
