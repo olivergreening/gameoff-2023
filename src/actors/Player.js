@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Vehicle from './Vehicle';
+import Consts from '../consts.js';
 import Audio from '../audio';
 import { Controls } from '../controls';
 
@@ -18,8 +19,8 @@ export default class Player extends Vehicle {
 		this.brakingSpeed = 0.2;
 		this.accelerationSpeed = 0.1;
 		this.decelerationSpeed = 0.1;
-		this.minSpeed = 10;
-		this.maxSpeed = 20;
+		this.minSpeed = 8;
+		this.maxSpeed = 12;
 		this.speed = this.minSpeed;
 
 		this.money = 0;
@@ -144,11 +145,10 @@ export default class Player extends Vehicle {
 
 		// TODO: add sound effect
 		this.scene.cameras.main.shake(200, 0.01);
-		return;
 	}
 
 	downLane() {
-		if (this.lane < 5) {
+		if (this.lane < Consts.lanes) {
 			const target = this.lane + 1;
 			const tween = {
 				targets: this,
@@ -172,7 +172,6 @@ export default class Player extends Vehicle {
 
 		// TODO: add sound effect
 		this.scene.cameras.main.shake(200, 0.01);
-		return;
 	}
 
 	switchSize() {
@@ -194,7 +193,7 @@ export default class Player extends Vehicle {
 		if (this.states.isBraking) {
 			if (this.controls.left.isDown) {
 				this.speed -= this.brakingSpeed;
-				this.speed = this.speed < 10 ? 10 : this.speed;
+				this.speed = this.speed < this.minSpeed ? this.minSpeed : this.speed;
 			} else {
 				this.states.isBraking = false;
 			}
@@ -206,7 +205,7 @@ export default class Player extends Vehicle {
 				this.states.isBraking = true;
 			} else {
 				this.speed -= this.decelerationSpeed;
-				this.speed = this.speed < 10 ? 10 : this.speed;
+				this.speed = this.speed < this.minSpeed ? this.minSpeed : this.speed;
 			}
 		}
 
