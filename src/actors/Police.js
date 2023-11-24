@@ -13,7 +13,7 @@ export default class Police extends Vehicle {
 			isLaneSwitchAllowed: true,
 		};
 
-		this.speed = 10;
+		this.speed = 8;
 
 		this.init();
 	}
@@ -23,9 +23,13 @@ export default class Police extends Vehicle {
 		this.setLane(0);
 		this.setOrigin(0, 1);
 
-		if (Phaser.Math.Between(0, 1) == 0) {
+		if (1 == 1) {
+			this.setSize(52, 32, 13, 23);
+			this.setDisplayOrigin(9, 32);
 			this.setTexture('police_car');
 		} else {
+			this.setSize(50, 38, 14, 18);
+			this.setDisplayOrigin(9, 36.5);
 			this.setTexture('police_big_car');
 		}
 	}
@@ -80,12 +84,5 @@ export default class Police extends Vehicle {
 
 	update(time, delta) {
 		this.x += this.speed;
-		if (this.player.lane != this.lane) {
-			if (this.player.lane > this.lane) {
-				this.downLane();
-			} else {
-				this.upLane();
-			}
-		}
 	}
 }
