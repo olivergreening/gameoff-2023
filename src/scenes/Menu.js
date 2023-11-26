@@ -40,13 +40,15 @@ export class Menu extends Phaser.Scene {
 			324,
 			'menu_bkg_2',
 		);
-		this.title = this.add.bitmapText(
-			MX,
-			50,
-			Consts.font,
-			'GETAWAY HEIST',
-			TITLE_FONT_SIZE,
-		);
+		// this.title = this.add.bitmapText(
+		// 	MX,
+		// 	50,
+		// 	Consts.font,
+		// 	'GETAWAY HEIST',
+		// 	TITLE_FONT_SIZE,
+		// );
+		this.title = this.add.image(MX + 115, 80, 'title');
+		this.title.setScale(1.25);
 
 		this.ypos = 0; // first menu option pre-selected
 		this.ymax = 0;

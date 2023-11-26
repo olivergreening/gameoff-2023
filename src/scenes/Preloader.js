@@ -11,7 +11,7 @@ export class Preloader extends Phaser.Scene {
 		if (Consts.scene) {
 			this.scene.start(Consts.scene);
 		} else {
-			this.scene.start('Menu');
+			this.scene.start('Intro');
 		}
 	}
 
@@ -26,6 +26,7 @@ export class Preloader extends Phaser.Scene {
 		);
 
 		// images
+		this.load.image('title', './images/smuglogo.png');
 		this.load.image('menu_bkg_1', './images/1.png');
 		this.load.image('menu_bkg_2', './images/3.png');
 		this.load.image(

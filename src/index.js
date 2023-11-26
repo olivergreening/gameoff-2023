@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 
 import Consts from './consts';
-import Utils from './utils';
 import * as Scenes from './scenes';
 
 window.onload = function () {
@@ -19,8 +18,9 @@ window.onload = function () {
 		},
 		scene: [
 			Scenes.Preloader,
-			Scenes.Transition,
+			Scenes.Intro,
 			Scenes.Menu,
+			Scenes.Transition,
 			Scenes.Game,
 			Scenes.Win,
 			Scenes.Lose,
