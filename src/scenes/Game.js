@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import Consts from '../consts';
+import Audio from '../audio';
 import Player from '../actors/Player';
 import Npc from '../actors/Npc';
 import Police from '../actors/Police';
@@ -42,6 +43,11 @@ export class Game extends Phaser.Scene {
 
 		this.world = new World(this, this.player);
 		this.world.generate();
+
+		this.audio = new Audio(this);
+		this.audio.setMusicVol('music-play', 0);
+		this.audio.playMusic('music-play', { loop: true });
+		this.audio.fadeIn(null, { duration: 2000, maxVol: 0.55 });		
 	}
 
 	gameOver() {
