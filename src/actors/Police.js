@@ -1,16 +1,18 @@
 import Phaser from 'phaser';
 import Vehicle from './Vehicle';
-import Audio from '../audio';
-import { Controls } from '../controls';
+import Consts from '../consts.js';
 
 export default class Police extends Vehicle {
-	constructor(scene, player) {
+	constructor(scene, player, npcs) {
 		super(scene);
 
 		this.player = player;
+		this.npcs = npcs;
 
 		this.states = {
 			isLaneSwitchAllowed: true,
+			collisionWithPlayer: false,
+			collisionWithNpcs: false,
 		};
 
 		this.speed = 8;
@@ -20,17 +22,16 @@ export default class Police extends Vehicle {
 
 	init() {
 		this.x = 0;
-		this.y = 0;
 		this.setLane(1);
 		this.setOrigin(0, 1);
 
 		switch (Phaser.Math.Between(0, 1)) {
 			case 0:
 				this.setTexture('police_car');
-			break;
+				break;
 			case 1:
 				this.setTexture('police_big_car');
-			break;
+				break;
 		}
 	}
 
@@ -57,7 +58,7 @@ export default class Police extends Vehicle {
 	}
 
 	downLane() {
-		if (this.lane < 3) {
+		if (this.lane < Consts.lanes) {
 			const target = this.lane + 1;
 			const tween = {
 				targets: this,
@@ -76,6 +77,11 @@ export default class Police extends Vehicle {
 			this.scene.tweens.add(tween);
 			return;
 		}
+	}
+
+	preUpdate(time, delta) {
+		this.states.collisionWithPlayer = this.checkForCollision(this, this.player);
+		this.states.collisionWithNpcs = this.checkForCollision(this, this.npcs);
 	}
 
 	update(time, delta) {

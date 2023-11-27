@@ -1,19 +1,23 @@
 import Phaser from 'phaser';
 import Vehicle from './Vehicle';
 import Consts from '../consts.js';
-import Audio from '../audio';
 import { Controls } from '../controls';
 
 export default class Player extends Vehicle {
-	constructor(scene) {
+	constructor(scene, police, npcs) {
 		super(scene);
 
 		this.controls = new Controls(this.scene.input);
+
+		this.police = police;
+		this.npcs = npcs;
 
 		this.states = {
 			isLaneSwitchAllowed: true,
 			isBraking: false,
 			isBig: false,
+			collisionWithPolice: false,
+			collisionWithNpcs: false,
 		};
 
 		this.brakingSpeed = 0.2;
@@ -35,9 +39,8 @@ export default class Player extends Vehicle {
 	init() {
 		this.x = 400;
 		this.setLane(0);
-		this.setOrigin(0, .7);
+		this.setOrigin(0, 0.7);
 		this.setTexture('player_car');
-		this.setFrame(0);
 		this.createAnimations();
 	}
 
@@ -53,17 +56,23 @@ export default class Player extends Vehicle {
 			},
 			{
 				key: 'bigFoward',
-				frames: this.anims.generateFrameNumbers('player_car', { frames: [9] }),
+				frames: this.anims.generateFrameNumbers('player_car', {
+					frames: [9],
+				}),
 				repeat: -1,
 			},
 			{
 				key: 'bigUp',
-				frames: this.anims.generateFrameNumbers('player_car', { frames: [11] }),
+				frames: this.anims.generateFrameNumbers('player_car', {
+					frames: [11],
+				}),
 				repeat: -1,
 			},
 			{
 				key: 'bigDown',
-				frames: this.anims.generateFrameNumbers('player_car', { frames: [10] }),
+				frames: this.anims.generateFrameNumbers('player_car', {
+					frames: [10],
+				}),
 				repeat: -1,
 			},
 			{
@@ -76,17 +85,23 @@ export default class Player extends Vehicle {
 			},
 			{
 				key: 'smallFoward',
-				frames: this.anims.generateFrameNumbers('player_car', { frames: [12] }),
+				frames: this.anims.generateFrameNumbers('player_car', {
+					frames: [12],
+				}),
 				repeat: -1,
 			},
 			{
 				key: 'smallUp',
-				frames: this.anims.generateFrameNumbers('player_car', { frames: [14] }),
+				frames: this.anims.generateFrameNumbers('player_car', {
+					frames: [14],
+				}),
 				repeat: -1,
 			},
 			{
 				key: 'smallDown',
-				frames: this.anims.generateFrameNumbers('player_car', { frames: [13] }),
+				frames: this.anims.generateFrameNumbers('player_car', {
+					frames: [13],
+				}),
 				repeat: -1,
 			},
 		];
@@ -181,7 +196,7 @@ export default class Player extends Vehicle {
 	switchSize() {
 		this.setAnimationToTransform();
 		this.states.isBig = !this.states.isBig;
-		
+
 		if (this.states.isBig) {
 			this.minSpeed = this.minSpeedForBig;
 			this.maxSpeed = this.maxSpeedForBig;
@@ -189,6 +204,11 @@ export default class Player extends Vehicle {
 			this.minSpeed = this.minSpeedForSmall;
 			this.maxSpeed = this.maxSpeedForSmall;
 		}
+	}
+
+	preUpdate(time, delta) {
+		this.states.collisionWithPolice = this.checkForCollision(this.police);
+		this.states.collisionWithNpcs = this.checkForCollision(this.npcs);
 	}
 
 	update(time, delta) {
