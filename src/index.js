@@ -22,8 +22,7 @@ window.onload = function () {
 			Scenes.Menu,
 			Scenes.Transition,
 			Scenes.Game,
-			Scenes.Win,
-			Scenes.Lose,
+			Scenes.Gameover,
 		],
 		render: {
 			pixelArt: true,

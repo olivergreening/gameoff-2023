@@ -3,5 +3,4 @@ export * from './Intro';
 export * from './Menu';
 export * from './Transition';
 export * from './Game';
-export * from './Win';
-export * from './Lose';
+export * from './Gameover';

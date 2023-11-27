@@ -9,8 +9,8 @@ export class Transition extends Phaser.Scene {
 	}
 
 	create() {
-		this.audio = new Audio(this);
 		this.controls = new Controls(this.input);
+		this.audio = new Audio(this);
 
 		// todo: add a background image instead
 		this.add
