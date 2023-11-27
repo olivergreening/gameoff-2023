@@ -1,6 +1,6 @@
 # SMUG
 
-[**Play on itch.io**](https://kenamick.itch.io/kickpunch)
+[**Play on itch.io**](https://olivergreening.itch.io/smug)
 
 ## Supported Browsers
 
@@ -8,7 +8,7 @@
 | ------------- | :---: |
 | Google Chrome | 👍  |
 | Firefox       | 👍  |
-| Safari        |  ❌ |
+| Safari        | 👍 |
 
 ## Controlsmp:
 
