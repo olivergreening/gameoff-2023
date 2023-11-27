@@ -7,11 +7,11 @@ let _currentMusic = null;
 
 // key => slots  => slot#
 const SOUNDS = {
-	'menu-move': [['menu_move.ogg']],
-	'menu-select-soft': [['menu_select_soft.ogg']],
-	'menu-select-hard': [['menu_select_hard.ogg']],
-	'menu-enter': [['menu_enter.ogg']],
-	'menu-exit': [['menu_exit.ogg']],
+	'menu-move': [['menu_move.ogg','menu_move.m4a']],
+	'menu-select-soft': [['menu_select_soft.ogg','menu_select_soft.m4a']],
+	'menu-select-hard': [['menu_select_hard.ogg','menu_select_hard.m4a']],
+	'menu-enter': [['menu_enter.ogg','menu_enter.m4a']],
+	'menu-exit': [['menu_exit.ogg','menu_exit.m4a']],
 };
 
 const MUSIC = {
