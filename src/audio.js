@@ -120,8 +120,15 @@ class Audio {
 		}
 
 		_currentMusic = this.music[key];
+
+		if (config && (config.vol || config.vol === 0)) {
+			_currentMusic.setVolume(config.vol);
+		}
+
 		if (config && config.loop) {
 			_currentMusic.play({ loop: config.loop });
+		} else {
+			_currentMusic.play();
 		}
 	}
 
