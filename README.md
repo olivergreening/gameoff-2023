@@ -1,14 +1,18 @@
-# TBD
+# SMUG
 
-:video_game: [game-off-2023](https://itch.io/jam/game-off-2023) challenge entry.
+[**Play on itch.io**](https://kenamick.itch.io/kickpunch)
 
 ## Supported Browsers
 
-TODO
+|   Browser     | Support |
+| ------------- | :---: |
+| Google Chrome | 👍  |
+| Firefox       | 👍  |
+| Safari        |  ❌ |
 
-## Controls
+## Controlsmp:
 
-TODO
+Use the `Arrow Keys` or `WASD` keys to switch lanes and accelerate
 
 ## Development
 
