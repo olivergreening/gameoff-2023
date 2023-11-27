@@ -14,9 +14,9 @@ TODO
 
 **Requirements**
 
-* [Node.js 20+](https://nodejs.org)
-* [npm](https://www.npmjs.com/package/npm) or [Yarn](https://yarnpkg.com/)
-* [Git LFS](https://git-lfs.github.com/)
+- [Node.js 20+](https://nodejs.org)
+- [npm](https://www.npmjs.com/package/npm) or [Yarn](https://yarnpkg.com/)
+- [Git LFS](https://git-lfs.github.com/)
 
 To run a dev server:
 

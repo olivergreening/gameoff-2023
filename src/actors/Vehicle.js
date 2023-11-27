@@ -5,7 +5,7 @@ import Consts from '../consts.js';
 export default class Player extends BaseActor {
 	constructor(scene) {
 		super(scene);
-		
+
 		this.lane = 0;
 	}
 
@@ -17,5 +17,9 @@ export default class Player extends BaseActor {
 		this.depth = target;
 		this.lane = target;
 		this.y = this.calculateLaneY(this.lane);
+	}
+
+	checkForCollision(obj) {
+		return false;
 	}
 }

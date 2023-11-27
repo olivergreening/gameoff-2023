@@ -1,17 +1,22 @@
 import Phaser from 'phaser';
 import Vehicle from './Vehicle';
 import Consts from '../consts.js';
-import Audio from '../audio';
-import { Controls } from '../controls';
 
 export default class Npc extends Vehicle {
-	constructor(scene, player) {
+	constructor(scene, player, police, npcs) {
 		super(scene);
+
+		this.player = player;
+		this.police = police;
+		this.npcs = npcs;
 
 		this.states = {
 			isLaneSwitchAllowed: true,
+			collisionWithPlayer: false,
+			collisionWithPolice: false,
+			collisionWithNpcs: false,
 		};
-		this.player = player;
+
 		this.speed = 8;
 
 		this.init();
@@ -21,29 +26,30 @@ export default class Npc extends Vehicle {
 		this.x = 0;
 		this.setLane(0);
 		this.setOrigin(0, 1);
-		
+
 		switch (Phaser.Math.Between(0, 4)) {
 			case 0:
 				this.setTexture('couple_car');
 				break;
 			case 1:
-
 				this.setTexture('ice_cream_car');
 				break;
 			case 2:
-
 				this.setTexture('mini_car');
 				break;
 			case 3:
-
 				this.setTexture('muscle_car');
 				break;
 			case 4:
 				this.setTexture('sedan_car');
 				break;
 		}
-		
+
 		this.visible = true;
+	}
+
+	destroy(arr, i) {
+		this.arr.splice(i);
 	}
 
 	upLane() {
@@ -89,12 +95,18 @@ export default class Npc extends Vehicle {
 			return;
 		}
 	}
-	
-	update(time, delta) {	
+
+	preUpdate(time, delta) {
+		this.states.collisionWithPlayer = this.checkForCollision(this.player);
+		this.states.collisionWithPolice = this.checkForCollision(this.police);
+		this.states.collisionWithNpcs = this.checkForCollision(this.npcs);
+	}
+
+	update(time, delta) {
 		if (this.x > Consts.worldWidth) {
-			this.x = 0;	
+			this.x = 0;
 		}
-		
+
 		this.x += this.speed;
 	}
 }

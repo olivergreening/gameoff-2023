@@ -52,9 +52,20 @@ export class Preloader extends Phaser.Scene {
 		this.load.image('sedan_car', './sprites/cars/sedan-car-76x76.png');
 
 		// spritesheets
-		this.load.spritesheet('player_car', './sprites/cars/player-car-76x76.png', { frameWidth: 76, frameHeight: 76 });
-		this.load.spritesheet('smoke_begin', './sprites/particles/smoke-particle-begin-48x64.png', { frameWidth: 48, frameHeight: 64 });
-		this.load.spritesheet('smoke_loop', './sprites/particles/smoke-particle-repeat-48x64.png', { frameWidth: 48, frameHeight: 64 });
+		this.load.spritesheet('player_car', './sprites/cars/player-car-76x76.png', {
+			frameWidth: 76,
+			frameHeight: 76,
+		});
+		this.load.spritesheet(
+			'smoke_begin',
+			'./sprites/particles/smoke-particle-begin-48x64.png',
+			{ frameWidth: 48, frameHeight: 64 },
+		);
+		this.load.spritesheet(
+			'smoke_loop',
+			'./sprites/particles/smoke-particle-repeat-48x64.png',
+			{ frameWidth: 48, frameHeight: 64 },
+		);
 
 		// audio sfx and music
 		Audio.load(this.load);
