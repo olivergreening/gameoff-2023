@@ -30,7 +30,7 @@ export class Menu extends Phaser.Scene {
 		this.audio = new Audio(this);
 		this.audio.setMusicVol('music-menu', 0);
 		this.audio.playMusic('music-menu', { loop: true });
-		this.audio.fadeIn(null, { maxVol: 0.75 });
+		this.audio.fadeIn(null, { maxVol: 0.65 });
 
 		this.tileback1 = this.add.tileSprite(W_2, H_2, W, H, 'menu_bkg_1');
 		this.tileback2 = this.add.tileSprite(

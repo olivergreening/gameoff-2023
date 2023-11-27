@@ -41,9 +41,8 @@ export class Game extends Phaser.Scene {
 		this.world.generate();
 
 		this.audio = new Audio(this);
-		this.audio.setMusicVol('music-play', 0);
-		this.audio.playMusic('music-play', { loop: true });
-		this.audio.fadeIn(null, { duration: 2000, maxVol: 0.55 });
+		this.audio.playMusic('music-play', { vol: 0, loop: true });
+		this.audio.fadeIn(null, { duration: 2000, maxVol: 0.5 });
 	}
 
 	gameOver() {
