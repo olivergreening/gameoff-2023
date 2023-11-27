@@ -14,7 +14,7 @@ const Consts = {
 	screenHeight: 600,
 	worldWidth: 40000,
 	lanes: 9,
-	laneStartY: 58,
+	laneStartY: 140,
 	font: 'm6x11',
 	tileSize: 16, // pixels
 	z: {

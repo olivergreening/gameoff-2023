@@ -24,7 +24,7 @@ export class World {
 		this.road = new Road(this.scene, {
 			tileWidth: Consts.tileSize,
 			tileHeight: Consts.tileSize,
-			startY: 58, // this is the y-pos where the lanes start from
+			startY: Consts.laneStartY, // this is the y-pos where the lanes start from
 			endY: MAP_HEIGHT * Consts.tileSize,
 		});
 		this.road.generate(map, MAP_WIDTH, MAP_HEIGHT);
