@@ -21,7 +21,7 @@ export class Game extends Phaser.Scene {
 		this.npcs = [];
 		this.police = [];
 		this.player = new Player(this, this.police, this.npcs);
-		
+
 		for (let lane = 0; lane < Consts.lanes + 1; lane++) {
 			for (let i = 0; i < MAX_NPC; i++) {
 				const npc = new Npc(this, this.player, this.police, this.npcs);
@@ -49,28 +49,42 @@ export class Game extends Phaser.Scene {
 	}
 
 	gameOver() {
-		this.scene.start('Gameover');
+		this._gameover = true; // player is no longer in control
+
+		this.audio.fadeOut(() => console.log('test'), { duration: 750 });
+		this.cameras.main.once('camerafadeoutcomplete', () =>
+			this.scene.start('Gameover', {
+				// TODO: pass player score and stats for the game over screen
+				score: 0
+			}),
+		);
+		this.cameras.main.fadeOut(1000, 0);			
 	}
 
-	update(time, delta) {		
-		this.player.update(time, delta);
+	update(time, delta) {
 		this.world.update(time, delta);
-		
+
+		if (this._gameover) {
+			return;
+		}
+
+		this.player.update(time, delta);
+
 		this.police.forEach((police) => {
 			if (police.checkForCollision(this.player)) {
 				this.gameOver();
 			}
-			
+
 			police.update(time, delta)
 		});
-		
+
 		this.npcs.forEach((npc) => {
 			if (npc.checkForCollision(this.player)) {
 				if (!this.player.states.isBig) {
 					this.player.setHealth(this.player.health - 2);
 					this.player.screenShake();
 				}
-				
+
 				this.player.audio.playSound('player-explosion');
 				this.player.explosion.x = npc.x + npc.width / 2;
 				this.player.explosion.y = npc.y - npc.height / 2;
@@ -80,9 +94,9 @@ export class Game extends Phaser.Scene {
 
 			npc.update(time, delta);
 		});
-		
+
 		if (this.player.health == 0) {
-			this.gameOver();	
+			this.gameOver();
 		}
 	}
 }
