@@ -10,32 +10,34 @@ export default class Road {
 		this.currentLayerIdx = 0;
 	}
 
-	generate(map, mapTilesWidth, mapTilesHeight) {
+	generate(map) {
+		const mapTilesWidth = this.config.mapWidth;
+		const mapTilesHeight = this.config.mapHeight;
 		const sy = this.config.startY;
 
-		// --- add top and bottom sides
-		this.top = this.scene.add.rectangle(
-			0,
-			0,
-			Consts.screenWidth * 2,
-			sy * 2,
-			0xececec,
-		);
-		this.top.setScrollFactor(0, 0);
-		this.top.setDepth(Consts.z.roadLayer);
+		// --- add static top and bottom sides
+		// this.top = this.scene.add.rectangle(
+		// 	0,
+		// 	0,
+		// 	Consts.screenWidth * 2,
+		// 	sy * 2,
+		// 	0xececec,
+		// );
+		// this.top.setScrollFactor(0, 0);
+		// this.top.setDepth(Consts.z.roadLayer);
 
-		this.bottom = this.scene.add.rectangle(
-			0,
-			Consts.tileSize * mapTilesHeight,
-			Consts.screenWidth * 2,
-			Consts.screenHeight * 2 - Consts.tileSize * mapTilesHeight,
-			0xececec,
-		);
-		this.bottom.setScrollFactor(0, 0);
-		this.bottom.setDepth(Consts.z.roadLayer);
+		// this.bottom = this.scene.add.rectangle(
+		// 	0,
+		// 	Consts.tileSize * mapTilesHeight,
+		// 	Consts.screenWidth * 2,
+		// 	Consts.screenHeight * 2 - Consts.tileSize * mapTilesHeight,
+		// 	0xececec,
+		// );
+		// this.bottom.setScrollFactor(0, 0);
+		// this.bottom.setDepth(Consts.z.roadLayer);
 
 		// --- generate 3 layers of lanes that will server as a side-scrolling buffer
-		const roadTilset = map.addTilesetImage('road_tiles');
+		const roadTilset = map.addTilesetImage('road_tiles', null, this.config.tileSize, this.config.tileSize);
 		const layers = [
 			// lanes
 			map.createBlankLayer('layer_lanes_1', roadTilset, 0, sy),

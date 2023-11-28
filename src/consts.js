@@ -14,13 +14,16 @@ const Consts = {
 	screenHeight: 600,
 	worldWidth: 40000,
 	lanes: 9,
-	laneStartY: 140,
+	laneStartY: 140, // this is the y-pos where the lanes start from
 	font: 'm6x11',
-	tileSize: 16, // pixels
+	tileSize: 16,
+	sideWalkTileSize: 32,
 	z: {
 		roadLayer: -99,
 		decalsLayer: -98,
-		trapsLayer: -90,
+		sidewalkLayer: -91,
+		sidewalkOverlayLayer: -90,
+		trapsLayer: -80,
 	},
 
 	// dev flags passed as url parameters, e.g. `?debug=true&show_fps=true`

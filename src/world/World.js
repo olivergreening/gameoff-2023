@@ -1,12 +1,14 @@
-import Phaser from 'phaser';
 import Consts from '../consts';
-import Utils from '../utils';
 
 import Road from './Road';
+import Sidewalk from './Sidewalk';
 import Traps from './Traps';
 
-const MAP_WIDTH = 50;
+const MAP_WIDTH = Consts.screenWidth / Consts.tileSize;
 const MAP_HEIGHT = 20;
+
+const SIDEWALK_MAP_WIDTH = Consts.screenWidth / Consts.sideWalkTileSize;
+const SIDEWALK_MAP_HEIGHT = Consts.screenHeight / Consts.sideWalkTileSize + 1;
 
 export class World {
 	constructor(scene, player) {
@@ -15,6 +17,15 @@ export class World {
 	}
 
 	generate() {
+		const cfg = {
+			mapWidth: MAP_WIDTH,
+			mapHeight: MAP_HEIGHT,
+			tileWidth: Consts.tileSize,
+			tileHeight: Consts.tileSize,
+			startY: Consts.laneStartY,
+			endY: MAP_HEIGHT * Consts.tileSize,
+		};
+
 		const map = this.scene.make.tilemap({
 			tileWidth: Consts.tileSize,
 			tileHeight: Consts.tileSize,
@@ -22,15 +33,18 @@ export class World {
 			height: MAP_HEIGHT * 3,
 		});
 
-		const cfg = {
-			tileWidth: Consts.tileSize,
-			tileHeight: Consts.tileSize,
-			startY: Consts.laneStartY, // this is the y-pos where the lanes start from
-			endY: MAP_HEIGHT * Consts.tileSize,
-		};
-
 		this.road = new Road(this.scene, cfg);
-		this.road.generate(map, MAP_WIDTH, MAP_HEIGHT);
+		this.road.generate(map);
+
+		const map2 = this.scene.make.tilemap({
+			tileWidth: Consts.sideWalkTileSize,
+			tileHeight: Consts.sideWalkTileSize,
+			width: SIDEWALK_MAP_WIDTH * 3,
+			height: SIDEWALK_MAP_HEIGHT * 3,
+		});
+
+		this.sidewalk = new Sidewalk(this.scene, cfg);
+		this.sidewalk.generate(map2);
 
 		this.traps = new Traps(this.scene, cfg);
 		this.traps.generate();
@@ -38,5 +52,6 @@ export class World {
 
 	update(time, delta) {
 		this.road.update(this.player);
+		this.sidewalk.update(this.player);
 	}
 }
