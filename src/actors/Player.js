@@ -1,15 +1,17 @@
 import Phaser from 'phaser';
 import Vehicle from './Vehicle';
-import Consts from '../consts.js';
-import Utils from '../utils.js';
+import Consts from '../consts';
+import Utils from '../utils';
 import { Controls } from '../controls';
+import Audio from '../audio';
 
 export default class Player extends Vehicle {
 	constructor(scene, police, npcs) {
 		super(scene);
 
 		this.controls = new Controls(this.scene.input);
-
+		this.audio = new Audio(this.scene);
+		
 		this.police = police;
 		this.npcs = npcs;
 
@@ -217,8 +219,10 @@ export default class Player extends Vehicle {
 
 		if (this.states.isLaneSwitchAllowed) {
 			if (this.controls.up.isPressed) {
+				this.audio.playSound('player-shift-lane-up');
 				this.upLane();
 			} else if (this.controls.down.isPressed) {
+				this.audio.playSound('player-shift-lane-down');
 				this.downLane();
 			}
 		}
