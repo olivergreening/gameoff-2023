@@ -22,13 +22,9 @@ export default class RoadDecals {
 			maxSize: maxSize || MAX_ADDITIVES,
 		});
 
-		for (let i = 0; i < 25; i++) {
-			if (this.canCreate()) {
-				this.createDecal(0, Consts.screenWidth);
-			}
-			if (this.canCreate()) {
-				this.createAdditive(0, Consts.screenWidth);
-			}
+		for (let i = 0; i < 10; i++) {
+			this.createDecal(0, Consts.screenWidth * 2);
+			this.createAdditive(0, Consts.screenWidth * 2);
 		}
 	}
 
@@ -72,7 +68,7 @@ export default class RoadDecals {
 				.setDepth(Consts.z.decalsLayer)
 				.setScale(scale)
 				.setFlipX(flipped);
-			Utils.debug('(decal) created at', x, y);
+			//Utils.debug('(decal) created at', x, y);
 		}
 	}
 
@@ -101,8 +97,8 @@ export default class RoadDecals {
 			Phaser.Math.Between(0, 100) > 50
 				? this.config.startY + Phaser.Math.Between(-1, 1)
 				: this.config.endY +
-				  this.config.tileHeight * 3.5 +
-				  Phaser.Math.Between(-1, 1);
+				this.config.tileHeight * 3.5 +
+				Phaser.Math.Between(-1, 1);
 
 		const decal = this.groupAdditives.get(x, y, 'road_weeds', name);
 		if (decal) {
@@ -114,7 +110,7 @@ export default class RoadDecals {
 				.setDepth(Consts.z.decalsLayer)
 				.setScale(scale)
 				.setFlipX(flipped);
-			Utils.debug('(additive) created at', x, y);
+			//Utils.debug('(additive) created at', x, y);
 		}
 	}
 
