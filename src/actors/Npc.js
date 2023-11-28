@@ -12,9 +12,6 @@ export default class Npc extends Vehicle {
 
 		this.states = {
 			isLaneSwitchAllowed: true,
-			collisionWithPlayer: false,
-			collisionWithPolice: false,
-			collisionWithNpcs: false,
 		};
 
 		this.speed = 8;
@@ -48,10 +45,6 @@ export default class Npc extends Vehicle {
 		this.visible = true;
 	}
 
-	destroy(arr, i) {
-		this.arr.splice(i);
-	}
-
 	upLane() {
 		if (this.lane > 0) {
 			const target = this.lane - 1;
@@ -70,7 +63,6 @@ export default class Npc extends Vehicle {
 			};
 
 			this.scene.tweens.add(tween);
-			return;
 		}
 	}
 
@@ -92,14 +84,24 @@ export default class Npc extends Vehicle {
 			};
 
 			this.scene.tweens.add(tween);
-			return;
 		}
 	}
 
-	preUpdate(time, delta) {
-		this.states.collisionWithPlayer = this.checkForCollision(this.player);
-		this.states.collisionWithPolice = this.checkForCollision(this.police);
-		this.states.collisionWithNpcs = this.checkForCollision(this.npcs);
+	die() {
+		const tween = {
+            targets: this,
+			alpha: 0,
+            duration: 200,
+            ease: 'Quadratic.In',
+            onStart: () => {
+                this.speed = 0;
+            },
+            onComplete: () => {
+                this.destroy();
+            },
+        };
+		
+		this.scene.tweens.add(tween);
 	}
 
 	update(time, delta) {

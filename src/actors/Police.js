@@ -11,8 +11,6 @@ export default class Police extends Vehicle {
 
 		this.states = {
 			isLaneSwitchAllowed: true,
-			collisionWithPlayer: false,
-			collisionWithNpcs: false,
 		};
 
 		this.speed = 8;
@@ -53,7 +51,6 @@ export default class Police extends Vehicle {
 			};
 
 			this.scene.tweens.add(tween);
-			return;
 		}
 	}
 
@@ -75,13 +72,7 @@ export default class Police extends Vehicle {
 			};
 
 			this.scene.tweens.add(tween);
-			return;
 		}
-	}
-
-	preUpdate(time, delta) {
-		this.states.collisionWithPlayer = this.checkForCollision(this, this.player);
-		this.states.collisionWithNpcs = this.checkForCollision(this, this.npcs);
 	}
 
 	update(time, delta) {
