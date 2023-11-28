@@ -1,6 +1,10 @@
+![SMUG](https://github.com/olivergreening/gameoff-2023/raw/main/public/images/smuglogo.png)
+
 # SMUG
 
-[**Play on itch.io**](https://olivergreening.itch.io/smug)
+A 2D car-chase game made for the Game Off 2023 challenge.
+
+:video_game: [**Play on itch.io**](https://olivergreening.itch.io/smug)
 
 ## Supported Browsers
 
