@@ -71,6 +71,7 @@ export class Game extends Phaser.Scene {
 					this.player.screenShake();
 				}
 				
+				this.player.audio.playSound('player-explosion');
 				this.player.explosion.x = npc.x + npc.width / 2;
 				this.player.explosion.y = npc.y - npc.height / 2;
 				this.player.playExplosionAnimation();

@@ -12,6 +12,12 @@ const SOUNDS = {
 	'menu-select-hard': [['menu_select_hard.ogg','menu_select_hard.m4a']],
 	'menu-enter': [['menu_enter.ogg','menu_enter.m4a']],
 	'menu-exit': [['menu_exit.ogg','menu_exit.m4a']],
+	'player-accelerate': [['player_accelerate.ogg', 'player_accelerate.m4a']],
+	'player-decelerate': [['player_decelerate.ogg', 'player_decelerate.m4a']],
+	'player-drive': [['player_drive.ogg', 'player_drive.m4a']],
+	'player-shift-lane-down': [['player_shift_lane_down.ogg', 'player_shift_lane_down.m4a']],
+	'player-shift-lane-up': [['player_shift_lane_up.ogg', 'player_shift_lane_up.m4a']],
+	'player-explosion': [['player_explosion.ogg', 'player_explosion.m4a']],
 };
 
 const MUSIC = {
