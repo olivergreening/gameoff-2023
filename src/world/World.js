@@ -2,7 +2,7 @@ import Consts from '../consts';
 
 import Road from './Road';
 import Sidewalk from './Sidewalk';
-import Traps from './Traps';
+import Obstacles from './Obstacles';
 
 const MAP_WIDTH = Consts.screenWidth / Consts.tileSize;
 const MAP_HEIGHT = 20;
@@ -46,12 +46,23 @@ export class World {
 		this.sidewalk = new Sidewalk(this.scene, cfg);
 		this.sidewalk.generate(map2);
 
-		this.traps = new Traps(this.scene, cfg);
-		this.traps.generate();
+		this.obstacles = new Obstacles(this.scene, cfg);
+		this.obstacles.generate();
+
+		console.log('*** obstacleLanes', this.obstacleLanes);
 	}
 
 	update(time, delta) {
 		this.road.update(this.player);
 		this.sidewalk.update(this.player);
+		this.obstacles.update(time, delta);
+	}
+
+	/**
+	 * returns an array of lanes which will only have obstacles on them
+	 * and no NPCs
+	 */
+	get obstacleLanes() {
+		return this.obstacles.obstacleLanes;
 	}
 }

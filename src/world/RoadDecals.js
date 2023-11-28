@@ -22,6 +22,7 @@ export default class RoadDecals {
 			maxSize: maxSize || MAX_ADDITIVES,
 		});
 
+		// generate initial entities
 		for (let i = 0; i < 10; i++) {
 			this.createDecal(0, Consts.screenWidth * 2);
 			this.createAdditive(0, Consts.screenWidth * 2);

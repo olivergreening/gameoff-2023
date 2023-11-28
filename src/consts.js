@@ -15,6 +15,7 @@ const Consts = {
 	worldWidth: 40000,
 	lanes: 9,
 	laneStartY: 140, // this is the y-pos where the lanes start from
+	maxObstacleLanes: 4, // how many obstacles-only lanes to generate
 	font: 'm6x11',
 	tileSize: 16,
 	sideWalkTileSize: 32,
@@ -23,7 +24,7 @@ const Consts = {
 		decalsLayer: -98,
 		sidewalkLayer: -91,
 		sidewalkOverlayLayer: -90,
-		trapsLayer: -80,
+		obstaclesLayer: -80,
 	},
 
 	// dev flags passed as url parameters, e.g. `?debug=true&show_fps=true`

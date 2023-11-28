@@ -64,9 +64,7 @@ export class Preloader extends Phaser.Scene {
 		this.load.image('trap_banana_03', './sprites/traps/spin/banana-trap-32x32-03.png');
 		this.load.image('trap_banana_04', './sprites/traps/spin/banana-trap-32x32-04.png');
 		this.load.image('trap_banana_04', './sprites/traps/spin/banana-trap-32x32-04.png');
-		this.load.image('trap_road_pole', './sprites/traps/stop/road-stick-trap-32x32.png');
-		this.load.image('trap_road_h_block', './sprites/traps/stop/roadblock-horizontal-trap-52x52.png');
-		this.load.image('trap_road_v_block', './sprites/traps/stop/roadblock-vertical-trap-52x52.png');
+		// this.load.image('trap_road_v_block', './sprites/traps/stop/roadblock-vertical-trap-52x52.png');
 
 		// spritesheets
 		this.load.spritesheet(
@@ -84,6 +82,10 @@ export class Preloader extends Phaser.Scene {
 			'./sprites/particles/car-collision-particle-48x48.png',
 			{ frameWidth: 48, frameHeight: 48 },
 		);
+		this.load.spritesheet('trap_road_h_block', './sprites/traps/stop/roadblock-horizontal-trap-52x52.png',
+			{ frameWidth: 52, frameHeight: 52 });
+		this.load.spritesheet('trap_road_pole', './sprites/traps/stop/road-stick-trap-32x32.png',
+			{ frameWidth: 32, frameHeight: 32 });
 
 		// audio sfx and music
 		Audio.load(this.load);
