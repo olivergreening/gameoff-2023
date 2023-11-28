@@ -9,20 +9,23 @@ import { World } from '../world';
 const MAX_POLICE = 1;
 const MAX_NPC = 50;
 
+let money = 10000000;
+let destructionCaused = 0;
+
 export class Game extends Phaser.Scene {
 	constructor() {
 		super('Game');
 	}
 
 	create() {
-		this.player = new Player(this, this.police, this.npcs);
 		this.npcs = [];
 		this.police = [];
-
+		this.player = new Player(this, this.police, this.npcs);
+		
 		for (let lane = 0; lane < Consts.lanes + 1; lane++) {
 			for (let i = 0; i < MAX_NPC; i++) {
 				const npc = new Npc(this, this.player, this.police, this.npcs);
-				npc.x = Math.random() * (Consts.worldWidth - 0) + 0;
+				npc.x = Math.random() * (Consts.worldWidth - Consts.screenWidth) + Consts.screenWidth;
 				npc.setLane(lane);
 				npc.speed *= Math.random() * (1.05 - 0.95) + 0.95;
 				this.npcs.push(npc);
@@ -46,19 +49,40 @@ export class Game extends Phaser.Scene {
 	}
 
 	gameOver() {
-		this.scene.start('Lose');
+		this.scene.start('Gameover');
 	}
 
-	update(time, delta) {
+	update(time, delta) {		
 		this.player.update(time, delta);
 		this.world.update(time, delta);
-		this.police.forEach((police) => police.update(time, delta));
-		this.npcs.forEach((npc, i) => {
-			if (npc.states.hasCollisionWithPlayer) {
-				npc.destroy(this.npcs, i);
+		
+		this.police.forEach((police) => {
+			if (police.checkForCollision(this.player)) {
+				this.gameOver();
+			}
+			
+			police.update(time, delta)
+		});
+		
+		this.npcs.forEach((npc) => {
+			if (npc.checkForCollision(this.player)) {
+				if (!this.player.states.isBig) {
+					this.player.setHealth(this.player.health - 2);
+					this.player.screenShake();
+				}
+				
+				this.player.audio.playSound('player-explosion');
+				this.player.explosion.x = npc.x + npc.width / 2;
+				this.player.explosion.y = npc.y - npc.height / 2;
+				this.player.playExplosionAnimation();
+				npc.die();
 			}
 
 			npc.update(time, delta);
 		});
+		
+		if (this.player.health == 0) {
+			this.gameOver();	
+		}
 	}
 }
