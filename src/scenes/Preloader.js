@@ -50,6 +50,16 @@ export class Preloader extends Phaser.Scene {
 		this.load.image('mini_car', './sprites/cars/mini-car-76x76.png');
 		this.load.image('muscle_car', './sprites/cars/muscle-car-76x76.png');
 		this.load.image('sedan_car', './sprites/cars/sedan-car-76x76.png');
+		this.load.image('trap_fakehole', './sprites/traps/fall/fakehole-trap-84x64.png');
+		this.load.image('trap_hole', './sprites/traps/fall/hole-trap-46x20.png');
+		this.load.image('trap_banana_01', './sprites/traps/spin/banana-trap-32x32-01.png');
+		this.load.image('trap_banana_02', './sprites/traps/spin/banana-trap-32x32-02.png');
+		this.load.image('trap_banana_03', './sprites/traps/spin/banana-trap-32x32-03.png');
+		this.load.image('trap_banana_04', './sprites/traps/spin/banana-trap-32x32-04.png');
+		this.load.image('trap_banana_04', './sprites/traps/spin/banana-trap-32x32-04.png');
+		this.load.image('trap_road_pole', './sprites/traps/stop/road-stick-trap-32x32.png');
+		this.load.image('trap_road_h_block', './sprites/traps/stop/roadblock-horizontal-trap-52x52.png');
+		this.load.image('trap_road_v_block', './sprites/traps/stop/roadblock-vertical-trap-52x52.png');
 
 		// spritesheets
 		this.load.spritesheet('player_car', './sprites/cars/player-car-76x76.png', {

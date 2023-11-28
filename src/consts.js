@@ -20,6 +20,7 @@ const Consts = {
 	z: {
 		roadLayer: -99,
 		decalsLayer: -98,
+		trapsLayer: -90,
 	},
 
 	// dev flags passed as url parameters, e.g. `?debug=true&show_fps=true`
