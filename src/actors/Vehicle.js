@@ -18,8 +18,12 @@ export default class Player extends BaseActor {
 		this.lane = target;
 		this.y = this.calculateLaneY(this.lane);
 	}
-
-	checkForCollision(obj) {
+	
+	checkForCollision(actor) {
+		if (this.lane == actor.lane && this.x + this.width >= actor.x && this.x <= actor.x + actor.width) {
+			return true;
+		}
+		
 		return false;
 	}
 }
