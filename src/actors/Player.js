@@ -216,8 +216,8 @@ export default class Player extends Vehicle {
 
 		if (this.states.isBig) {
 			const width = 61, height = 48;
-			this.body.setSize(width - 8, height - 14, true);
-			this.body.setOffset(10, 10);
+			this.body.setSize(width - 8, height - 28, true);
+			this.body.setOffset(10, 24);
 		} else {
 			const width = 32, height = 32;
 			this.body.setSize(width * 0.65, height * 0.4, true);
