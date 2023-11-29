@@ -18,6 +18,10 @@ export class Game extends Phaser.Scene {
 	}
 
 	create() {
+		this.audio = new Audio(this);
+		this.audio.playMusic('music-play', { vol: 0, loop: true });
+		this.audio.fadeIn(null, { duration: 2000, maxVol: 0.5 });
+
 		this.npcs = [];
 		this.police = [];
 		this.player = new Player(this, this.police, this.npcs);
@@ -43,12 +47,19 @@ export class Game extends Phaser.Scene {
 		this.world = new World(this, this.player);
 		this.world.generate();
 
-		this.audio = new Audio(this);
-		this.audio.playMusic('music-play', { vol: 0, loop: true });
-		this.audio.fadeIn(null, { duration: 2000, maxVol: 0.5 });
+		// collision detection for world objects
+		this.world.addObstaclesCollider(this.player, () => {
+			this.onPlayerHit();
+		});
+	}
+
+	onPlayerHit() {
+		this.player.setHealth(this.player.health - 2);
+		this.player.screenShake();
 	}
 
 	gameOver() {
+		this.world.removeColliders();
 		this._gameover = true; // player is no longer in control
 
 		this.audio.fadeOut(() => console.log('test'), { duration: 750 });
@@ -81,8 +92,7 @@ export class Game extends Phaser.Scene {
 		this.npcs.forEach((npc) => {
 			if (npc.checkForCollision(this.player)) {
 				if (!this.player.states.isBig) {
-					this.player.setHealth(this.player.health - 2);
-					this.player.screenShake();
+					this.onPlayerHit();
 				}
 
 				this.player.audio.playSound('player-explosion');

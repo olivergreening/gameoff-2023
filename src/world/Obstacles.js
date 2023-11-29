@@ -58,21 +58,26 @@ export default class Obstacles {
 	createEntity(xMin, xMax) {
 		let name;
 		let yOffset;
-		let scale = 1;
+		let yOffsetBody = 0;
+		let yFactorBody;
+		let scale;
 		let frame = undefined;
 
 		switch (Phaser.Math.Between(0, 2)) {
 			case 0:
 				name = 'trap_road_h_block';
 				yOffset = 8;
-				scale = 1;
+				yOffsetBody = 5;
+				yFactorBody = 0.25;
 				frame = 0;
+				// scale = 1;
 				break;
 			case 1:
 			case 2:
 				name = 'trap_hole';
 				yOffset = 17;
-				scale = 1;
+				yFactorBody = 0.5;
+				// scale = 1;
 				break;
 			// case 3:
 			// 	name = 'trap_road_pole';
@@ -90,8 +95,13 @@ export default class Obstacles {
 			entity
 				.setActive(true)
 				.setVisible(true)
-				.setScale(scale)
+				// .setScale(scale)
 				.setFlipX(Phaser.Math.Between(0, 100) > 50);
+
+			// add physics body for collisions
+			this.scene.physics.add.existing(entity, false);
+			entity.body.setSize(entity.width * 0.65,
+				entity.height * yFactorBody + yOffsetBody, true);
 
 			this.lastLaneIdx += 1;
 			if (this.lastLaneIdx >= this._obstacleLanes.length) {
@@ -127,6 +137,10 @@ export default class Obstacles {
 	 */
 	addChance(value) {
 		this._chance = Math.max(25, this._chance - (value || 1));
+	}
+
+	get obstaclesGroup() {
+		return this.group;
 	}
 
 	get obstacleLanes() {

@@ -33,6 +33,10 @@ export default class Player extends Vehicle {
 		this.maxSpeed = this.maxSpeedForSmall;
 		this.speed = this.minSpeed;
 
+		// add body for Arcade-engine collisions
+		scene.physics.add.existing(this, false);
+		this.switchPhysicsBodySize();
+
 		this.init();
 	}
 
@@ -118,6 +122,11 @@ export default class Player extends Vehicle {
 
 	setAnimation(target) {
 		this.play(target);
+		// this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (anim) => {
+        //     if (anim.key === 'smallTransform' || anim.key === 'bigTransform') {
+		// 		this.switchPhysicsBodySize();
+		// 	}
+        // }, this);
 	}
 
 	setAnimationToFoward() {
@@ -199,6 +208,23 @@ export default class Player extends Vehicle {
 		this.screenShake();
 	}
 
+	switchPhysicsBodySize() {
+		// TODO: something's getting messed up with the sizes on anim transform,
+		// so using hardcoded values for now
+		// const width = this.width;
+		// const height = this.height;
+
+		if (this.states.isBig) {
+			const width = 61, height = 48;
+			this.body.setSize(width - 8, height - 14, true);
+			this.body.setOffset(10, 10);
+		} else {
+			const width = 32, height = 32;
+			this.body.setSize(width * 0.65, height * 0.4, true);
+			this.body.setOffset(8, 2);
+		}
+	}
+
 	switchSize() {
 		if (this.states.isSizeSwitchAllowed) {
 			this.setAnimationToTransform();
@@ -211,6 +237,8 @@ export default class Player extends Vehicle {
 				this.minSpeed = this.minSpeedForSmall;
 				this.maxSpeed = this.maxSpeedForSmall;
 			}
+
+			this.switchPhysicsBodySize();
 		}
 	}
 

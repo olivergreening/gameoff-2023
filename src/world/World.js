@@ -14,6 +14,7 @@ export class World {
 	constructor(scene, player) {
 		this.scene = scene;
 		this.player = player;
+		this._colliders = [];
 	}
 
 	generate() {
@@ -50,6 +51,22 @@ export class World {
 		this.obstacles.generate();
 
 		console.log('*** obstacleLanes', this.obstacleLanes);
+	}
+
+	addObstaclesCollider(entity, cb) {
+		this._colliders.push(this.scene.physics.add.collider(entity, this.obstacles.obstaclesGroup,
+			(entityHit, obstacleHit) => {
+				// play
+				this.obstacles.obstaclesGroup.killAndHide(obstacleHit);
+				cb();
+			}));
+	}
+
+	/**
+	 * Remove all registered colliders for world objects
+	 */
+	removeColliders() {
+		this._colliders.forEach((collider) => this.scene.physics.world.removeCollider(collider));
 	}
 
 	update(time, delta) {
