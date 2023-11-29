@@ -97,8 +97,7 @@ export default class RoadDecals {
 		const y =
 			Phaser.Math.Between(0, 100) > 50
 				? this.config.startY + Phaser.Math.Between(-1, 1)
-				: this.config.endY +
-				this.config.tileHeight * 3.5 +
+				: this.config.startY + this.config.endY +
 				Phaser.Math.Between(-1, 1);
 
 		const decal = this.groupAdditives.get(x, y, 'road_weeds', name);
