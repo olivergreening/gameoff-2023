@@ -102,6 +102,7 @@ export default class Obstacles {
 			this.scene.physics.add.existing(entity, false);
 			entity.body.setSize(entity.width * 0.65,
 				entity.height * yFactorBody + yOffsetBody, true);
+			entity.body.setEnable(true);
 
 			this.lastLaneIdx += 1;
 			if (this.lastLaneIdx >= this._obstacleLanes.length) {
@@ -128,6 +129,14 @@ export default class Obstacles {
 				this.group.killAndHide(entity);
 			}
 		});
+	}
+
+	onHit(obstacle) {
+		if (obstacle.texture.key === 'trap_hole') {
+			obstacle.body.setEnable(false);
+		} else {
+			this.group.killAndHide(obstacle);
+		}
 	}
 
 	/**

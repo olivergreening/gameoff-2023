@@ -33,6 +33,7 @@ export class Game extends Phaser.Scene {
 		// collision detection for world objects
 		this.world.addObstaclesCollider(this.player, () => {
 			this.onPlayerHit();
+			this.audio.playSound('explosion');
 		});
 		
 		// collision detection for world npcs

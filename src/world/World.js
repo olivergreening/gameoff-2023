@@ -57,11 +57,10 @@ export class World {
 		console.log('*** obstacleLanes', this.obstacleLanes);
 	}
 
-	addObstaclesCollider(entity, cb) {
-		this._colliders.push(this.scene.physics.add.collider(entity, this.obstacles.obstaclesGroup,
-			(entityHit, obstacleHit) => {
-				// play
-				this.obstacles.obstaclesGroup.killAndHide(obstacleHit);
+	addObstaclesCollider(actor, cb) {
+		this._colliders.push(this.scene.physics.add.collider(actor, this.obstacles.obstaclesGroup,
+			(actorHit, obstacleHit) => {
+				this.obstacles.onHit(obstacleHit);
 				cb();
 			}));
 	}
