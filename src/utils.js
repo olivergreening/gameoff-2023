@@ -28,6 +28,10 @@ const Utils = {
 		
 		return arr;
 	},
+
+	transposeNumber(current, max, newMax) {
+		return (current / max) * newMax;
+	}
 };
 
 export default Utils;

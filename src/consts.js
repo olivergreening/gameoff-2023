@@ -25,6 +25,7 @@ const Consts = {
 		sidewalkLayer: -91,
 		sidewalkOverlayLayer: -90,
 		obstaclesLayer: -80,
+		hudLayer: 0,
 	},
 
 	// dev flags passed as url parameters, e.g. `?debug=true&show_fps=true`

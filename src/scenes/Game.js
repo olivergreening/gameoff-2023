@@ -4,6 +4,7 @@ import Audio from '../audio';
 import Player from '../actors/Player';
 import VehicleCollisionExplosion from '../effects/VehicleCollisionExplosion';
 import { World } from '../world';
+import Hud from '../hud';
 
 const MAX_POLICE = 1;
 const MAX_NPC = 50;
@@ -23,6 +24,9 @@ export class Game extends Phaser.Scene {
 
 		this.explosion = new VehicleCollisionExplosion(this);
 		this.player = new Player(this);
+
+		this.hud = new Hud(this, this.player);
+		this.hud.init();
 
 		this.cameras.main.startFollow(this.player);
 		this.cameras.main.setBounds(0, 0, Consts.worldWidth, Consts.screenHeight);
@@ -74,6 +78,7 @@ export class Game extends Phaser.Scene {
 	update(time, delta) {
 		this.world.update(time, delta);
 		this.player.update(time, delta);
+		this.hud.update(time, delta);
 
 		if (this._gameover) {
 			return;
