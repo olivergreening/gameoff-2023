@@ -3,6 +3,8 @@ import Consts from '../consts';
 import Audio from '../audio';
 import { Controls } from '../controls';
 
+const Y_OFFSET = 150;
+
 export class Transition extends Phaser.Scene {
 	constructor() {
 		super('Transition');
@@ -12,15 +14,21 @@ export class Transition extends Phaser.Scene {
 		this.controls = new Controls(this.input);
 		this.audio = new Audio(this);
 
-		// todo: add a background image instead
 		this.add
-			.rectangle(0, 0, Consts.screenWidth, Consts.screenHeight, 0x5079bf)
+			.rectangle(0, 0, Consts.screenWidth, Consts.screenHeight, 0x121212)
 			.setOrigin(0);
+
+		this.add.tileSprite(
+			Consts.screenWidth * 0.5,
+			Consts.screenHeight - 324 * 0.5,
+			Consts.screenWidth,
+			324,
+			'menu_bkg_2');
 
 		this.add
 			.bitmapText(
 				Consts.screenWidth * 0.5,
-				Consts.screenHeight * 0.5 - 50,
+				Consts.screenHeight * 0.5 - Y_OFFSET,
 				Consts.font,
 				'Get ready to escape!',
 				48,
@@ -29,16 +37,16 @@ export class Transition extends Phaser.Scene {
 		this.add
 			.bitmapText(
 				Consts.screenWidth * 0.5,
-				Consts.screenHeight - 50,
+				Consts.screenHeight - Y_OFFSET,
 				Consts.font,
-				'Press space to continue...',
+				'Press Space to continue...',
 				24,
 			)
 			.setOrigin(0.5);
 
 		this.countdownText = this.add.bitmapText(
 			Consts.screenWidth * 0.5,
-			Consts.screenHeight - 150,
+			Consts.screenHeight - Y_OFFSET * 1.5,
 			Consts.font,
 			'10',
 			24,
