@@ -138,9 +138,8 @@ export class Menu extends Phaser.Scene {
 								this.audio.playSound('menu-exit');
 							}
 							this.audio.soundsOn = !this.audio.soundsOn;
-							this.menus[this.ypos].text = `SOUND: ${
-								this.audio.soundsOn ? 'ON' : 'OFF'
-							}`;
+							this.menus[this.ypos].text = `SOUND: ${this.audio.soundsOn ? 'ON' : 'OFF'
+								}`;
 
 							if (this.audio.soundsOn) {
 								this.audio.playSound('menu-enter');
@@ -153,9 +152,8 @@ export class Menu extends Phaser.Scene {
 							}
 
 							this.audio.musicOn = !this.audio.musicOn;
-							this.menus[this.ypos].text = `MUSIC: ${
-								this.audio.musicOn ? 'ON' : 'OFF'
-							}`;
+							this.menus[this.ypos].text = `MUSIC: ${this.audio.musicOn ? 'ON' : 'OFF'
+								}`;
 							if (this.audio.musicOn) {
 								this.audio.playMusic('music-menu', { loop: true });
 							}
@@ -279,6 +277,16 @@ export class Menu extends Phaser.Scene {
 		this.ypos = 0;
 		this.ymax = 0;
 
+		this.texts = [
+			this.add.bitmapText(
+				MX + 20,
+				MY + 150,
+				Consts.font,
+				'sorry, (*shrug*) we could not finish this in time...',
+				TEXT_FONT_SIZE,
+			),
+		];
+
 		if (this.tween) {
 			this.tween.restart();
 		}
@@ -321,14 +329,14 @@ export class Menu extends Phaser.Scene {
 				MX + 20,
 				MY + 220,
 				Consts.font,
-				'Oliver Greening',
+				'Oliver Greening, github.com/olivergreening',
 				TEXT_FONT_SIZE,
 			),
 			this.add.bitmapText(
 				MX + 20,
 				MY + 250,
 				Consts.font,
-				'Petar Petrov',
+				'Petar Petrov, github.com/petarov',
 				TEXT_FONT_SIZE,
 			),
 			this.add.bitmapText(
