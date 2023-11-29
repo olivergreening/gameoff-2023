@@ -12,6 +12,7 @@ window.location.search
 const Consts = {
 	screenWidth: 800,
 	screenHeight: 600,
+	cameraFadeDelay: 500,
 	worldWidth: 40000,
 	lanes: 9,
 	laneStartY: 140, // this is the y-pos where the lanes start from

@@ -13,6 +13,7 @@ export class Transition extends Phaser.Scene {
 	create() {
 		this.controls = new Controls(this.input);
 		this.audio = new Audio(this);
+		this.audio.stop();
 
 		this.add
 			.rectangle(0, 0, Consts.screenWidth, Consts.screenHeight, 0x121212)
@@ -93,7 +94,7 @@ export class Transition extends Phaser.Scene {
 			this.cameras.main.once('camerafadeoutcomplete', () =>
 				this.scene.start('Game'),
 			);
-			this.cameras.main.fadeOut(800, 0);
+			this.cameras.main.fadeOut(Consts.cameraFadeDelay, 0);
 		}
 	}
 }

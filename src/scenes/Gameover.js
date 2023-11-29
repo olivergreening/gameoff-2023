@@ -22,8 +22,9 @@ export class Gameover extends Phaser.Scene {
 	create() {
 		this.controls = new Controls(this.input);
 		this.audio = new Audio(this);
+		this.audio.stop();
 
-		this.cameras.main.fadeIn(500, 255, 255, 255);
+		this.cameras.main.fadeIn(Consts.cameraFadeDelay, 255, 255, 255);
 
 		this.tileback1 = this.add.tileSprite(W_2, H_2, W, H, 'menu_bkg_1');
 		this.tileback2 = this.add.tileSprite(
@@ -73,7 +74,7 @@ export class Gameover extends Phaser.Scene {
 			this.cameras.main.once('camerafadeoutcomplete', () =>
 				this.scene.start('Menu'),
 			);
-			this.cameras.main.fadeOut(800, 0);
+			this.cameras.main.fadeOut(Consts.cameraFadeDelay, 0);
 		}
 	}
 }

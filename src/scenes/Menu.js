@@ -112,8 +112,9 @@ export class Menu extends Phaser.Scene {
 					switch (this.ypos) {
 						case 0:
 							this.playTapped = true;
-							this.audio.fadeOut(() => this.scene.start('Transition'));
-							this.cameras.main.fadeOut(1000, 0);
+							this.audio.fadeOut({ duration: Consts.cameraFadeDelay });
+							this.cameras.main.once('camerafadeoutcomplete', () => this.scene.start('Transition'));
+							this.cameras.main.fadeOut(Consts.cameraFadeDelay, 0);
 							break;
 						case 1:
 							this.createOptions();

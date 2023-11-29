@@ -22,6 +22,8 @@ export class Game extends Phaser.Scene {
 		this.audio.playMusic('music-play', { vol: 0, loop: true });
 		this.audio.fadeIn(null, { duration: 2000, maxVol: 0.5 });
 
+		this.cameras.main.fadeIn(Consts.cameraFadeDelay, 255, 255, 255);
+
 		this.explosion = new VehicleCollisionExplosion(this);
 		this.player = new Player(this);
 
@@ -39,7 +41,7 @@ export class Game extends Phaser.Scene {
 			this.onPlayerHit();
 			this.audio.playSound('explosion');
 		});
-		
+
 		// collision detection for world npcs
 		this.world.addNpcsCollider(this.player, (npc) => {
 			this.onPlayerHit();
@@ -68,13 +70,13 @@ export class Game extends Phaser.Scene {
 				score: 0
 			}),
 		);
-		this.cameras.main.fadeOut(1000, 0);			
+		this.cameras.main.fadeOut(Consts.cameraFadeDelay * 2, 0);
 	}
 
 	screenShake(time, intensity) {
 		this.cameras.main.shake(time, intensity);
 	}
-	
+
 	update(time, delta) {
 		this.world.update(time, delta);
 		this.player.update(time, delta);
