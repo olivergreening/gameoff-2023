@@ -44,22 +44,10 @@ export default class Player extends Vehicle {
 		this.x = 400;
 		this.setLane(4);
 		this.setOrigin(0, 1);
-		this.createExplosion();
 		this.createAnimations();
 		this.setAnimationToFoward();
 	}
 
-	screenShake() {
-		this.scene.cameras.main.shake(200, 0.01);
-	}
-	
-	createExplosion() {
-		this.explosion = this.scene.add.sprite();
-		this.explosion.depth = 100;
-		this.explosion.setOrigin(0.5, 0.5);
-		this.explosion.visible = false;
-	}
-	
 	createAnimations() {
 		this.anims.create({
 			key: 'bigTransform',
@@ -110,14 +98,6 @@ export default class Player extends Vehicle {
 			frames: Utils.createFramesFromImages('player_car_', 13),
 			repeat: -1,
 		});
-
-		this.explosion.anims.create({
-			key: 'default',
-			frames: this.explosion.anims.generateFrameNumbers('car_collision', {
-				frames: [0, 1, 2, 3],
-			}),
-			repeat: 0,
-		});
 	}
 
 	setAnimation(target) {
@@ -148,11 +128,6 @@ export default class Player extends Vehicle {
 		const target = this.states.isBig ? 'bigTransform' : 'smallTransform';
 		this.setAnimation(target);
 	}
-
-	playExplosionAnimation() {
-		this.explosion.visible = true;
-		this.explosion.play('default');
-	}
 	
 	upLane() {
 		if (this.lane > 0) {
@@ -178,7 +153,7 @@ export default class Player extends Vehicle {
 		}
 
 		// TODO: add sound effect
-		this.screenShake();
+		this.scene.screenShake();
 	}
 
 	downLane() {
@@ -205,7 +180,7 @@ export default class Player extends Vehicle {
 		}
 
 		// TODO: add sound effect
-		this.screenShake();
+		this.scene.screenShake();
 	}
 
 	switchPhysicsBodySize() {

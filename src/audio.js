@@ -17,7 +17,7 @@ const SOUNDS = {
 	'player-drive': [['player_drive.ogg', 'player_drive.m4a']],
 	'player-shift-lane-down': [['player_shift_lane_down.ogg', 'player_shift_lane_down.m4a']],
 	'player-shift-lane-up': [['player_shift_lane_up.ogg', 'player_shift_lane_up.m4a']],
-	'player-explosion': [['player_explosion.ogg', 'player_explosion.m4a']],
+	'explosion': [['explosion.ogg', 'explosion.m4a']],
 };
 
 const MUSIC = {

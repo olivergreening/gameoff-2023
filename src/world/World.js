@@ -3,6 +3,7 @@ import Consts from '../consts';
 import Road from './Road';
 import Sidewalk from './Sidewalk';
 import Obstacles from './Obstacles';
+import NpcGenerator from './NpcGenerator';
 
 const MAP_WIDTH = Consts.screenWidth / Consts.tileSize;
 const MAP_HEIGHT = 20;
@@ -50,6 +51,9 @@ export class World {
 		this.obstacles = new Obstacles(this.scene, cfg);
 		this.obstacles.generate();
 
+		this.npcs = new NpcGenerator(this.scene, cfg);
+		this.npcs.generate();
+		
 		console.log('*** obstacleLanes', this.obstacleLanes);
 	}
 
@@ -60,6 +64,13 @@ export class World {
 				this.obstacles.obstaclesGroup.killAndHide(obstacleHit);
 				cb();
 			}));
+	}
+	
+	addNpcsCollider(actor, cb) {
+		this._colliders.push(this.scene.physics.add.collider(actor, this.npcs.group, (actorHit, npcHit) => {
+			npcHit.preDestroy();
+			cb(npcHit);
+		}));
 	}
 
 	/**
@@ -73,6 +84,7 @@ export class World {
 		this.road.update(this.player);
 		this.sidewalk.update(this.player);
 		this.obstacles.update(time, delta);
+		this.npcs.update(time, delta);
 	}
 
 	/**

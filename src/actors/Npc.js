@@ -3,25 +3,13 @@ import Vehicle from './Vehicle';
 import Consts from '../consts.js';
 
 export default class Npc extends Vehicle {
-	constructor(scene, player, police, npcs) {
+	constructor(scene) {
 		super(scene);
-
-		this.player = player;
-		this.police = police;
-		this.npcs = npcs;
-
-		this.states = {
-			isLaneSwitchAllowed: true,
-		};
-
 		this.speed = 8;
-
 		this.init();
 	}
 
 	init() {
-		this.x = 0;
-		this.setLane(0);
 		this.setOrigin(0, 1);
 
 		switch (Phaser.Math.Between(0, 4)) {
@@ -41,53 +29,9 @@ export default class Npc extends Vehicle {
 				this.setTexture('sedan_car');
 				break;
 		}
-
-		this.visible = true;
 	}
 
-	upLane() {
-		if (this.lane > 0) {
-			const target = this.lane - 1;
-			const tween = {
-				targets: this,
-				y: this.calculateLaneY(target),
-				duration: 200,
-				ease: 'Quadratic.In',
-				onStart: () => {
-					this.states.isLaneSwitchAllowed = false;
-				},
-				onComplete: () => {
-					this.setLane(target);
-					this.states.isLaneSwitchAllowed = true;
-				},
-			};
-
-			this.scene.tweens.add(tween);
-		}
-	}
-
-	downLane() {
-		if (this.lane < Consts.lanes) {
-			const target = this.lane + 1;
-			const tween = {
-				targets: this,
-				y: this.calculateLaneY(target),
-				duration: 200,
-				ease: 'Quadratic.In',
-				onStart: () => {
-					this.states.isLaneSwitchAllowed = false;
-				},
-				onComplete: () => {
-					this.setLane(target);
-					this.states.isLaneSwitchAllowed = true;
-				},
-			};
-
-			this.scene.tweens.add(tween);
-		}
-	}
-
-	die() {
+	preDestroy() {
 		const tween = {
             targets: this,
 			alpha: 0,
