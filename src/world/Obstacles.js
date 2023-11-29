@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import Consts from '../consts';
 import Utils from '../utils';
 
-const MAX_OBSTACLES_LANES = 4;
 const MAX_OBSTACLES = 20;
 const TIME_GENERATE = 2000; // 2 seconds
 
@@ -27,28 +26,29 @@ export default class Obstacles {
 			}
 		}
 
+		//  this._obstacleLanes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 		Utils.debug('(obstacle lanes)', this._obstacleLanes);
 
 		// generate obstacles that will be put on random on road lanes
 		this.group = this.scene.add.group({
 			maxSize: MAX_OBSTACLES
 		});
+		this.group.setDepth(Consts.z.obstaclesLayer);
 
 		// generate initial entities
-		for (let i = 0; i < Consts.maxObstacleLanes; i++) {
+		for (let i = 0; i < this._obstacleLanes.length; i++) {
 			this.createEntity(0, Consts.screenWidth * 2);
 		}
 
 		// add objects generation timer
-        this.triggerTimer = this.scene.time.addEvent({
-            callback: () => {
+		this.triggerTimer = this.scene.time.addEvent({
+			callback: () => {
 				this._createNow = true;
-				console.log('*******', this._createNow)
 			},
-            // callbackScope: this,
-            delay: 2000,
-            loop: true
-        });
+			// callbackScope: this,
+			delay: 2000,
+			loop: true
+		});
 	}
 
 	canCreate() {
@@ -57,31 +57,46 @@ export default class Obstacles {
 
 	createEntity(xMin, xMax) {
 		let name;
+		let yOffset;
+		let scale = 1;
+		let frame = undefined;
+
 		switch (Phaser.Math.Between(0, 2)) {
 			case 0:
-				name = 'trap_fakehole';
+				name = 'trap_road_h_block';
+				yOffset = 8;
+				scale = 1;
+				frame = 0;
 				break;
 			case 1:
 			case 2:
 				name = 'trap_hole';
+				yOffset = 17;
+				scale = 1;
 				break;
+			// case 3:
+			// 	name = 'trap_road_pole';
+			// 	yOffset = 15;
+			// 	scale = 2;
+			// 	frame = 0;
+			// 	break;
 		}
 
 		const x = Phaser.Math.Between(xMin, xMax);
-		const y = Consts.laneStartY + this.obstacleLanes[this.lastLaneIdx] * 16 + 24;
-		const entity = this.group.get(x, y, name);
+		const y = Consts.laneStartY + this._obstacleLanes[this.lastLaneIdx] * 32 + yOffset;
+		// console.log('y=' ,y, 'type= ', name, 'scale=', scale, 'yoff=', yOffset)
+		const entity = this.group.get(x, y, name, frame);
 		if (entity) {
-			const flipped = Phaser.Math.Between(0, 100) > 50;
 			entity
 				.setActive(true)
 				.setVisible(true)
-				.setDepth(Consts.z.obstaclesLayer)
-				.setFlipX(flipped);
-		}
+				.setScale(scale)
+				.setFlipX(Phaser.Math.Between(0, 100) > 50);
 
-		this.lastLaneIdx += 1;
-		if (this.lastLaneIdx > this._obstacleLanes.length) {
-			this.lastLaneIdx = 0;
+			this.lastLaneIdx += 1;
+			if (this.lastLaneIdx >= this._obstacleLanes.length) {
+				this.lastLaneIdx = 0;
+			}
 		}
 	}
 
@@ -98,7 +113,7 @@ export default class Obstacles {
 			}
 		}
 
-		this.group.children.iterate((entity) => {
+		this.group.getChildren().forEach((entity) => {
 			if (entity.x < x - Consts.screenWidth) {
 				this.group.killAndHide(entity);
 			}
