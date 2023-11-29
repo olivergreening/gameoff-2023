@@ -3,7 +3,7 @@ import Consts from '../consts';
 import Utils from '../utils';
 
 const MAX_OBSTACLES = 20;
-const TIME_GENERATE = 2000; // 2 seconds
+const GENERATE_TIME_DELAY = 500; // milliseconds
 
 export default class Obstacles {
 	constructor(scene, config) {
@@ -11,7 +11,7 @@ export default class Obstacles {
 		this.config = Utils.assert('config', config);
 		this._obstacleLanes = [];
 		this.lastLaneIdx = 0;
-		this._chance = 75; // %
+		// this._chance = 75; // %
 		this._createNow = false;
 	}
 
@@ -45,14 +45,14 @@ export default class Obstacles {
 			callback: () => {
 				this._createNow = true;
 			},
-			// callbackScope: this,
-			delay: 2000,
+			delay: GENERATE_TIME_DELAY,
 			loop: true
 		});
 	}
 
 	canCreate() {
-		return Phaser.Math.Between(0, 100) < this._chance;
+		// return Phaser.Math.Between(0, 100) < this._chance;
+		return true;
 	}
 
 	createEntity(xMin, xMax) {
@@ -63,7 +63,7 @@ export default class Obstacles {
 		let scale;
 		let frame = undefined;
 
-		switch (Phaser.Math.Between(0, 2)) {
+		switch (Phaser.Math.Between(0, 1)) {
 			case 0:
 				name = 'trap_road_h_block';
 				yOffset = 8;
@@ -73,7 +73,6 @@ export default class Obstacles {
 				// scale = 1;
 				break;
 			case 1:
-			case 2:
 				name = 'trap_hole';
 				yOffset = 17;
 				yFactorBody = 0.5;
@@ -137,15 +136,6 @@ export default class Obstacles {
 		} else {
 			this.group.killAndHide(obstacle);
 		}
-	}
-
-	/**
-	 * The more chance added, the more often obstacles get generated
-	 * 
-	 * @param {Number} value 
-	 */
-	addChance(value) {
-		this._chance = Math.max(25, this._chance - (value || 1));
 	}
 
 	get obstaclesGroup() {
