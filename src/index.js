@@ -14,7 +14,9 @@ window.onload = function () {
 		},
 		physics: {
 			default: 'arcade',
-			arcade: {},
+			arcade: {
+				debug: Consts.debugPhysics
+			},
 		},
 		scene: [
 			Scenes.Preloader,
