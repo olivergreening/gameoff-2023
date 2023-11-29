@@ -5,6 +5,7 @@ import Utils from '../utils';
 const FONT_SIZE = 18;
 const MAX_SPEED = 240; // kmph
 const MAX_MONEY = 1_000_000; // €
+const MAX_DISTANCE = 200; // km
 
 export default class Hud {
     constructor(scene, player) {
@@ -25,8 +26,8 @@ export default class Hud {
         const transposedSpeed = ~~Utils.transposeNumber(this.player.speed, this.player.maxSpeedForSmall, MAX_SPEED);
         this.speed.setText(transposedSpeed);
 
-        // TODO:
-        this.distance.setText(1000);
+        const transposedDist = MAX_DISTANCE - ~~Utils.transposeNumber(this.player.x + this.player.width, Consts.worldWidth, MAX_DISTANCE);
+        this.distance.setText(transposedDist);
     }
 
     _addTopLeft() {
