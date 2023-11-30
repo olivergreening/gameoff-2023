@@ -29,7 +29,6 @@ export default class NpcGenerator {
 			entity.speed *= Phaser.Math.Between(1, 1);
 			entity.setActive(true);
 			entity.setVisible(true);
-			this.scene.physics.add.existing(entity, false);
 			this.group.add(entity);
 		}
 	}

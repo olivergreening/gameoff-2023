@@ -6,26 +6,37 @@ export default class Npc extends Vehicle {
 	constructor(scene) {
 		super(scene);
 		this.speed = 8;
+		this.scene.physics.add.existing(this, false);
 		this.init();
 	}
 
 	init() {
 		this.setOrigin(0, 1);
-
+		
 		switch (Phaser.Math.Between(0, 4)) {
 			case 0:
+				this.body.setSize(46, 22, true);
+				this.body.setOffset(this.speed, 6);
 				this.setTexture('couple_car');
 				break;
 			case 1:
+				this.body.setSize(58, 22, true);
+				this.body.setOffset(this.speed, 30);
 				this.setTexture('ice_cream_car');
 				break;
 			case 2:
+				this.body.setSize(42, 22, true);
+				this.body.setOffset(this.speed, 8);
 				this.setTexture('mini_car');
 				break;
 			case 3:
+				this.body.setSize(50, 22, true);
+				this.body.setOffset(this.speed, 6);
 				this.setTexture('muscle_car');
 				break;
 			case 4:
+				this.body.setSize(46, 22, true);
+				this.body.setOffset(this.speed, 10);
 				this.setTexture('sedan_car');
 				break;
 		}
@@ -50,7 +61,7 @@ export default class Npc extends Vehicle {
 
 	update(time, delta) {
 		if (this.x > Consts.worldWidth) {
-			this.x = 0;
+			this.x = 800;
 		}
 
 		this.x += this.speed;

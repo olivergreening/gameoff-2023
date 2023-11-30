@@ -27,7 +27,7 @@ export default class VehicleCollisionExplosion extends Phaser.GameObjects.Sprite
 			repeat: 0,
 		});
 		
-		this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (animation) => {
+		this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, (animation) => {
       		this.setVisible(false);
 		}, this);
 	}

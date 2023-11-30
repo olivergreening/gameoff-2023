@@ -15,7 +15,7 @@ window.onload = function () {
 		physics: {
 			default: 'arcade',
 			arcade: {
-				debug: Consts.debugPhysics
+				debug: true
 			},
 		},
 		scene: [

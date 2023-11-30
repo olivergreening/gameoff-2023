@@ -6,14 +6,11 @@ import { Controls } from '../controls';
 import Audio from '../audio';
 
 export default class Player extends Vehicle {
-	constructor(scene, police, npcs) {
+	constructor(scene) {
 		super(scene);
 
 		this.controls = new Controls(this.scene.input);
 		this.audio = new Audio(this.scene);
-		
-		this.police = police;
-		this.npcs = npcs;
 
 		this.states = {
 			isLaneSwitchAllowed: true,
@@ -34,8 +31,7 @@ export default class Player extends Vehicle {
 		this.speed = this.minSpeed;
 
 		// add body for Arcade-engine collisions
-		scene.physics.add.existing(this, false);
-		this.switchPhysicsBodySize();
+		this.scene.physics.add.existing(this, false);
 
 		this.init();
 	}
@@ -98,19 +94,43 @@ export default class Player extends Vehicle {
 			frames: Utils.createFramesFromImages('player_car_', 13),
 			repeat: -1,
 		});
+		
+		// collision bug fix. hack job, but works.		
+		this.on(Phaser.Animations.Events.ANIMATION_UPDATE, (animation, frame) => {
+			switch (animation.key) {
+				case 'smallFoward':
+				case 'smallUp':
+				case 'smallDown':
+					this.body.setSize(22, 13, true);
+					this.body.setOffset(this.speed, 2);
+					break;
+				case 'bigFoward':
+				case 'bigUp':
+				case 'bigDown':
+					this.body.setSize(62, 22, true);
+					this.body.setOffset(this.speed, 26);
+					break;
+				case 'smallTransform':
+				case 'bigTransform':
+					// invincibility lol
+					this.body.setOffset(0, -1000000);
+					break;
+			}
+		}, this);
+		
+		this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, (animation) => {
+			if (animation == 'smallTransform' || 'bigTransform') {
+				this.setAnimationToFoward();
+			}
+		}, this);
 	}
 
 	setAnimation(target) {
 		this.play(target);
-		// this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, (anim) => {
-        //     if (anim.key === 'smallTransform' || anim.key === 'bigTransform') {
-		// 		this.switchPhysicsBodySize();
-		// 	}
-        // }, this);
 	}
 
 	setAnimationToFoward() {
-		const target = this.states.isBig ? 'bigFoward' :'smallFoward';
+		const target = this.states.isBig ? 'bigFoward' : 'smallFoward';
 		this.setAnimation(target);
 	}
 
@@ -183,23 +203,6 @@ export default class Player extends Vehicle {
 		this.scene.screenShake();
 	}
 
-	switchPhysicsBodySize() {
-		// TODO: something's getting messed up with the sizes on anim transform,
-		// so using hardcoded values for now
-		// const width = this.width;
-		// const height = this.height;
-
-		if (this.states.isBig) {
-			const width = 61, height = 48;
-			this.body.setSize(width - 8, height - 28, true);
-			this.body.setOffset(10, 24);
-		} else {
-			const width = 32, height = 32;
-			this.body.setSize(width * 0.65, height * 0.4, true);
-			this.body.setOffset(8, 2);
-		}
-	}
-
 	switchSize() {
 		if (this.states.isSizeSwitchAllowed) {
 			this.setAnimationToTransform();
@@ -212,14 +215,12 @@ export default class Player extends Vehicle {
 				this.minSpeed = this.minSpeedForSmall;
 				this.maxSpeed = this.maxSpeedForSmall;
 			}
-
-			this.switchPhysicsBodySize();
 		}
 	}
 
 	update(time, delta) {
 		this.controls.update(time);
-
+		
 		if (this.states.isLaneSwitchAllowed) {
 			if (this.controls.up.isPressed) {
 				this.audio.playSound('player-shift-lane-up');
@@ -244,7 +245,6 @@ export default class Player extends Vehicle {
 			} else if (this.controls.left.isDown) {
 				this.states.isBraking = true;
 			} else {
-				
 				this.speed -= this.decelerationSpeed;
 				this.speed = this.speed < this.minSpeed ? this.minSpeed : this.speed;
 			}
