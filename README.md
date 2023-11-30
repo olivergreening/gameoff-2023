@@ -2,7 +2,7 @@
 
 # SMUG
 
-A 2D car-chase game made for the Game Off 2023 challenge.
+Crazy car-chasing 2D game where after a bank heist, the robbers need to escape the police and get away with as much cash as possible. Made for the Game Off 2023 game jam.
 
 :video_game: [**Play on itch.io**](https://olivergreening.itch.io/smug)
 
@@ -10,9 +10,9 @@ A 2D car-chase game made for the Game Off 2023 challenge.
 
 |   Browser     | Support |
 | ------------- | :---: |
-| Google Chrome | 👍  |
-| Firefox       | 👍  |
-| Safari        | 👍 |
+| Google Chrome | :white_check_mark:  |
+| Firefox       | :white_check_mark:  |
+| Safari        | :white_check_mark: |
 
 ## Controlsmp:
 
