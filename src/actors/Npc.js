@@ -3,15 +3,16 @@ import Vehicle from './Vehicle';
 import Consts from '../consts.js';
 
 export default class Npc extends Vehicle {
-	constructor(scene) {
+	constructor(scene, parent) {
 		super(scene);
+		this.parent = parent;
 		this.speed = 8;
 		this.init();
 	}
 
 	init() {
 		this.setOrigin(0, 1);
-		
+
 		switch (Phaser.Math.Between(0, 4)) {
 			case 0:
 				this.body.setSize(46, 22, true);
@@ -43,26 +44,29 @@ export default class Npc extends Vehicle {
 
 	preDestroy() {
 		const tween = {
-            targets: this,
+			targets: this,
 			alpha: 0,
-            duration: 200,
-            ease: 'Quadratic.In',
-            onStart: () => {
-                this.speed = 0;
-            },
-            onComplete: () => {
-                this.destroy();
-            },
-        };
-		
+			duration: 200,
+			ease: 'Quadratic.In',
+			onStart: () => {
+				this.speed = 0;
+			},
+			onComplete: () => {
+				this.destroy();
+			},
+		};
+
 		this.scene.tweens.add(tween);
 	}
 
 	update(time, delta) {
-		if (this.x > Consts.worldWidth) {
-			this.x = -800;
-		}
-
 		this.x += this.speed;
+
+		const cameraX = this.scene.cameras.main.worldView.centerX;
+
+		// NPC past screen bounds or point of no return relative to camera's position
+		if (this.x > Consts.worldWidth || this.x < cameraX - Consts.screenWidth) {
+			this.parent.removeNpc(this);
+		}
 	}
 }

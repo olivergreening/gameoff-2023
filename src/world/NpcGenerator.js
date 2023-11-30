@@ -11,7 +11,7 @@ export default class NpcGenerator {
 		this.config = Utils.assert('config', config);
 		this.group = this.scene.add.group();
 	}
-	
+
 	generate(skipLanes) {
 		skipLanes = skipLanes || [];
 
@@ -23,21 +23,26 @@ export default class NpcGenerator {
 			}
 		}
 	}
-	
-	createEntity(xMin, xMax, lane) {				
-		const entity = new Npc(this.scene);
 
-		if (entity) {
-			entity.x = Phaser.Math.Between(xMin, xMax);
-			entity.setLane(lane);
-			entity.speed *= Phaser.Math.Between(1, 1);
-			entity.setActive(true);
-			entity.setVisible(true);
-			this.group.add(entity);
-		}
+	createEntity(xMin, xMax, lane) {
+		const entity = new Npc(this.scene, this);
+		entity.x = Phaser.Math.Between(xMin, xMax);
+		entity.setLane(lane);
+		entity.speed *= Phaser.Math.Between(1, 1);
+		entity.setActive(true);
+		entity.setVisible(true);
+
+		this.group.add(entity);
 	}
-	
+
 	update(time, delta) {
 		this.group.getChildren().forEach((entity) => entity.update(time, delta));
+	}
+
+	removeNpc(entity) {
+		console.debug('(kill npc)', entity.texture.key);
+		this.group.killAndHide(entity);
+		// destroy so the physics body also goes aways
+		entity.destroy();
 	}
 }

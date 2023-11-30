@@ -12,7 +12,7 @@ export default class BaseActor extends Phaser.GameObjects.Sprite {
 	}
 
 	setHealth(target) {
-		if (target >= 0 && target <= 100) {
+		if (target >= 0 && target <= this.maxHealth) {
 			this.health = target;
 		}
 	}
