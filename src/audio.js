@@ -7,11 +7,11 @@ let _currentMusic = null;
 
 // key => slots  => slot#
 const SOUNDS = {
-	'menu-move': [['menu_move.ogg','menu_move.m4a']],
-	'menu-select-soft': [['menu_select_soft.ogg','menu_select_soft.m4a']],
-	'menu-select-hard': [['menu_select_hard.ogg','menu_select_hard.m4a']],
-	'menu-enter': [['menu_enter.ogg','menu_enter.m4a']],
-	'menu-exit': [['menu_exit.ogg','menu_exit.m4a']],
+	'menu-move': [['menu_move.ogg', 'menu_move.m4a']],
+	'menu-select-soft': [['menu_select_soft.ogg', 'menu_select_soft.m4a']],
+	'menu-select-hard': [['menu_select_hard.ogg', 'menu_select_hard.m4a']],
+	'menu-enter': [['menu_enter.ogg', 'menu_enter.m4a']],
+	'menu-exit': [['menu_exit.ogg', 'menu_exit.m4a']],
 	'player-accelerate': [['player_accelerate.ogg', 'player_accelerate.m4a']],
 	'player-decelerate': [['player_decelerate.ogg', 'player_decelerate.m4a']],
 	'player-drive': [['player_drive.ogg', 'player_drive.m4a']],
@@ -51,9 +51,9 @@ class Audio {
 
 		Object.keys(SOUNDS).forEach(
 			(key) =>
-				(this.sounds[key] = SOUNDS[key].map((_, idx) =>
-					scene.sound.add(`${key}${idx}`),
-				)),
+			(this.sounds[key] = SOUNDS[key].map((_, idx) =>
+				scene.sound.add(`${key}${idx}`),
+			)),
 		);
 		Object.keys(MUSIC).forEach(
 			(key) => (this.music[key] = scene.sound.add(key)),
@@ -153,8 +153,15 @@ class Audio {
 
 	fadeIn(cb, config) {
 		if (!this._musicOn) {
-			cb && cb();
+			if (typeof cb === 'function') {
+				cb();
+			}
 			return;
+		}
+
+		if (typeof cb === 'object') {
+			config = cb;
+			cb = null;
 		}
 
 		//_currentMusic.volume = 0;
@@ -172,14 +179,21 @@ class Audio {
 			volume: maxVol,
 			ease: 'Linear',
 			duration: duration,
-			onComplete: () => cb && cb(),
+			onComplete: cb,
 		});
 	}
 
 	fadeOut(cb, config) {
 		if (!this._musicOn || !_currentMusic) {
-			cb && cb();
+			if (typeof cb === 'function') {
+				cb();
+			}
 			return;
+		}
+
+		if (typeof cb === 'object') {
+			config = cb;
+			cb = null;
 		}
 
 		let duration = DEFAULT_FADE_INOUT;
