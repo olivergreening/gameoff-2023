@@ -30,9 +30,6 @@ export default class Player extends Vehicle {
 		this.maxSpeed = this.maxSpeedForSmall;
 		this.speed = this.minSpeed;
 
-		// add body for Arcade-engine collisions
-		this.scene.physics.add.existing(this, false);
-
 		this.init();
 	}
 

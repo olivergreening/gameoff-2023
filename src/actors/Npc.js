@@ -6,7 +6,6 @@ export default class Npc extends Vehicle {
 	constructor(scene) {
 		super(scene);
 		this.speed = 8;
-		this.scene.physics.add.existing(this, false);
 		this.init();
 	}
 
@@ -61,7 +60,7 @@ export default class Npc extends Vehicle {
 
 	update(time, delta) {
 		if (this.x > Consts.worldWidth) {
-			this.x = 800;
+			this.x = -800;
 		}
 
 		this.x += this.speed;

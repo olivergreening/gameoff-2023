@@ -7,7 +7,8 @@ export default class BaseActor extends Phaser.GameObjects.Sprite {
 		super(scene);
 		this.maxHealth = DEFAULT_HEALTH;
 		this.health = DEFAULT_HEALTH;
-		scene.add.existing(this);
+		this.scene.add.existing(this);
+		this.scene.physics.add.existing(this, false);
 	}
 
 	setHealth(target) {

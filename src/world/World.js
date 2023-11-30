@@ -4,6 +4,7 @@ import Road from './Road';
 import Sidewalk from './Sidewalk';
 import Obstacles from './Obstacles';
 import NpcGenerator from './NpcGenerator';
+import PoliceGenerator from './PoliceGenerator';
 
 const MAP_WIDTH = Consts.screenWidth / Consts.tileSize;
 const MAP_HEIGHT = 20;
@@ -54,6 +55,9 @@ export class World {
 		this.npcs = new NpcGenerator(this.scene, cfg);
 		this.npcs.generate();
 		
+		this.police = new PoliceGenerator(this.scene, this.player, this.npcs.getChildren, this.obstacles.getChildren, cfg);
+		this.police.generate();
+		
 		console.log('*** obstacleLanes', this.obstacleLanes);
 	}
 
@@ -71,6 +75,12 @@ export class World {
 			cb(npcHit);
 		}));
 	}
+	
+	addPoliceCollider(actor, cb) {
+		this._colliders.push(this.scene.physics.add.collider(actor, this.police.group, (actorHit, policeHit) => {
+			cb();
+		}));
+	}
 
 	/**
 	 * Remove all registered colliders for world objects
@@ -84,6 +94,7 @@ export class World {
 		this.sidewalk.update(this.player);
 		this.obstacles.update(time, delta);
 		this.npcs.update(time, delta);
+		this.police.update(time, delta);
 	}
 
 	/**

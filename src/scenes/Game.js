@@ -51,6 +51,11 @@ export class Game extends Phaser.Scene {
 			this.explosion.playDefault(explosionX, explosionY);
 			npc.preDestroy();
 		});
+		
+		// collision detection for police
+		this.world.addPoliceCollider(this.player, (police) => {
+			this.gameOver();
+		});
 	}
 
 	onPlayerHit() {
