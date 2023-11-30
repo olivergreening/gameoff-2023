@@ -3,9 +3,9 @@ import Consts from '../consts';
 import Utils from '../utils';
 
 const FONT_SIZE = 18;
-const MAX_SPEED = 240; // kmph
+const MAX_SPEED = 180; // kmph
 const MAX_MONEY = 1_000_000; // €
-const MAX_DISTANCE = 200; // km
+const MAX_DISTANCE = 1000; // km
 
 export default class Hud {
     constructor(scene, player) {
