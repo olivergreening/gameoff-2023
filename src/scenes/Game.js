@@ -51,7 +51,7 @@ export class Game extends Phaser.Scene {
 			this.explosion.playDefault(explosionX, explosionY);
 			npc.preDestroy();
 		});
-		
+
 		// collision detection for police
 		this.world.addPoliceCollider(this.player, (police) => {
 			this.gameOver();
@@ -66,10 +66,11 @@ export class Game extends Phaser.Scene {
 	}
 
 	gameOver() {
-		this.world.removeColliders();
 		this._gameover = true; // player is no longer in control
+		this.world.removeColliders();
 
-		this.audio.fadeOut(() => console.log('test'), { duration: 750 });
+		this.audio.fadeOut({ duration: Consts.cameraFadeDelay });
+
 		this.cameras.main.once('camerafadeoutcomplete', () =>
 			this.scene.start('Gameover', {
 				money: this.hud.formatMoney(this.hud.money),
@@ -79,6 +80,7 @@ export class Game extends Phaser.Scene {
 				averageSpeed: this.hud.averageSpeed
 			}),
 		);
+
 		this.cameras.main.fadeOut(Consts.cameraFadeDelay * 2, 0);
 	}
 
@@ -95,7 +97,9 @@ export class Game extends Phaser.Scene {
 		}
 
 		this.player.update(time, delta);
-		if (this.player.health == 0) {
+
+		// game end condition: player either loses all the cash or max distance reached
+		if (this.player.health <= 0 || this.player.x > Consts.worldWidth) {
 			this.gameOver();
 		}
 
