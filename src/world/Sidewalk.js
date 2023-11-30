@@ -49,24 +49,42 @@ export default class Sidewalk {
     populateLayer(layer) {
         const w = Consts.screenWidth / TILE_SIZE;
         const h = Consts.laneStartY / TILE_SIZE;
+        const mh = Math.floor(h);
 
         let grass = Phaser.Math.Between(0, 100) > 50;
 
         for (let y = 0; y < h; y++) {
             for (let x = 0; x < w; x++) {
                 if (grass) {
-                    if (!layer.hasTileAt(x, y)) {
-                        const rnd = Phaser.Math.Between(0, 100);
-                        if (rnd > 95 && y < h - 1) {
-                            // put a tree
-                            layer.putTileAt(this.tileId(9, 0), x, y);
-                            layer.putTileAt(this.tileId(9, 1), x, y + 1);
-                        } else if (rnd > 85) {
-                            // put a bush
-                            layer.putTileAt(this.tileId(8, 1), x, y);
+                    if (x === 0) {
+                        // put transition tile
+                        layer.putTileAt(this.tileId(6, 1), x, y);
+                    } else if (x === w - 1) {
+                        // put transition tile
+                        layer.putTileAt(this.tileId(4, 1), x, y);
+                    } else if (!layer.hasTileAt(x, y)) {
+                        if (mh == y) {
+                            console.log('Da')
+                            if (x === 0) {
+                                layer.putTileAt(this.tileId(0, 2), x, y);
+                            } else if (x === w - 1) {
+                                layer.putTileAt(this.tileId(2, 2), x, y);
+                            } else {
+                                layer.putTileAt(this.tileId(1, 2), x, y);
+                            }
                         } else {
-                            // put grass
-                            layer.putTileAt(this.tileId(0, 0), x, y);
+                            const rnd = Phaser.Math.Between(0, 100);
+                            if (rnd > 95 && y < h - 1) {
+                                // put a tree
+                                layer.putTileAt(this.tileId(9, 0), x, y);
+                                layer.putTileAt(this.tileId(9, 1), x, y + 1);
+                            } else if (rnd > 85) {
+                                // put a bush
+                                layer.putTileAt(this.tileId(8, 1), x, y);
+                            } else {
+                                // put grass
+                                layer.putTileAt(this.tileId(0, 0), x, y);
+                            }
                         }
                     }
                 } else {
@@ -95,6 +113,8 @@ export default class Sidewalk {
         //         layer.putTileAt(this.tileId(0, 5), x, ypos);
         //     }
         // }
+
+        layer.isGrass = grass;
     }
 
     update(player) {

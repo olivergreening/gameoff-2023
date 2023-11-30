@@ -15,6 +15,7 @@ let destructionCaused = 0;
 export class Game extends Phaser.Scene {
 	constructor() {
 		super('Game');
+		this._gameover = false;
 	}
 
 	create() {
