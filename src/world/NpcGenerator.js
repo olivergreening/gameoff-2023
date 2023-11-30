@@ -3,7 +3,7 @@ import Npc from '../actors/Npc';
 import Consts from '../consts';
 import Utils from '../utils';
 
-const MAX_NPCS = 50;
+const MAX_NPCS_PER_LANE = 50;
 
 export default class NpcGenerator {
 	constructor(scene, config) {
@@ -12,10 +12,14 @@ export default class NpcGenerator {
 		this.group = this.scene.add.group();
 	}
 	
-	generate() {
+	generate(skipLanes) {
+		skipLanes = skipLanes || [];
+
 		for (let lane = 0; lane < Consts.lanes; lane++) {
-			for (let i = 0; i < MAX_NPCS; i++) {
-				this.createEntity(Consts.screenWidth, Consts.worldWidth, lane);
+			if (skipLanes.indexOf(lane) < 0) {
+				for (let i = 0; i < MAX_NPCS_PER_LANE; i++) {
+					this.createEntity(Consts.screenWidth, Consts.worldWidth, lane);
+				}
 			}
 		}
 	}

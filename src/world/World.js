@@ -53,12 +53,10 @@ export class World {
 		this.obstacles.generate();
 
 		this.npcs = new NpcGenerator(this.scene, cfg);
-		this.npcs.generate();
-		
+		this.npcs.generate(this.obstacles.obstacleLanes);
+
 		this.police = new PoliceGenerator(this.scene, this.player, this.npcs.getChildren, this.obstacles.getChildren, cfg);
 		this.police.generate();
-		
-		console.log('*** obstacleLanes', this.obstacleLanes);
 	}
 
 	addObstaclesCollider(actor, cb) {
@@ -68,14 +66,14 @@ export class World {
 				cb();
 			}));
 	}
-	
+
 	addNpcsCollider(actor, cb) {
 		this._colliders.push(this.scene.physics.add.collider(actor, this.npcs.group, (actorHit, npcHit) => {
 			npcHit.preDestroy();
 			cb(npcHit);
 		}));
 	}
-	
+
 	addPoliceCollider(actor, cb) {
 		this._colliders.push(this.scene.physics.add.collider(actor, this.police.group, (actorHit, policeHit) => {
 			cb();
@@ -95,13 +93,5 @@ export class World {
 		this.obstacles.update(time, delta);
 		this.npcs.update(time, delta);
 		this.police.update(time, delta);
-	}
-
-	/**
-	 * returns an array of lanes which will only have obstacles on them
-	 * and no NPCs
-	 */
-	get obstacleLanes() {
-		return this.obstacles.obstacleLanes;
 	}
 }
