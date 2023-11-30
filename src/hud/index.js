@@ -12,29 +12,42 @@ export default class Hud {
         this.scene = scene;
         this.player = player;
         this.i18n = new Intl.NumberFormat('en-US');
+        this.transposedMoney = 0;
+        this.transposedSpeed = 0;
+        this.transposedDist = 0;
+        this._tachograph = [];
     }
 
     init() {
         this._addTopLeft();
         this._addBottomRight();
+
+        // add tachograph timer
+        this._tachographTimer = this.scene.time.addEvent({
+            callback: () => {
+                this._tachograph.push(this.transposedSpeed);
+            },
+            delay: 1000,
+            loop: true
+        });
     }
 
     update(time, delta) {
-        const transposedMoney = ~~Utils.transposeNumber(this.player.health, this.player.maxHealth, MAX_MONEY);
-        this.score.setText('$' + this.i18n.format(transposedMoney));
+        this.transposedMoney = ~~Utils.transposeNumber(this.player.health, this.player.maxHealth, MAX_MONEY);
+        this.scoreText.setText(this.formatMoney(this.transposedMoney));
 
-        const transposedSpeed = ~~Utils.transposeNumber(this.player.speed, this.player.maxSpeedForSmall, MAX_SPEED);
-        this.speed.setText(transposedSpeed);
+        this.transposedSpeed = ~~Utils.transposeNumber(this.player.speed, this.player.maxSpeedForSmall, MAX_SPEED);
+        this.speedText.setText(this.transposedSpeed);
 
-        const transposedDist = MAX_DISTANCE - ~~Utils.transposeNumber(this.player.x + this.player.width, Consts.worldWidth, MAX_DISTANCE);
-        this.distance.setText(transposedDist);
+        this.transposedDist = MAX_DISTANCE - ~~Utils.transposeNumber(this.player.x + this.player.width, Consts.worldWidth, MAX_DISTANCE);
+        this.distanceText.setText(this.transposedDist);
     }
 
     _addTopLeft() {
         this.pin(this.scene.add.rectangle(
             0,
             0,
-            FONT_SIZE * 20,
+            FONT_SIZE * 18.5,
             FONT_SIZE * 6,
             0x232323,
         ));
@@ -48,7 +61,7 @@ export default class Hud {
                 FONT_SIZE,
             ));
 
-        this.score = this.pin(this.scene.add
+        this.scoreText = this.pin(this.scene.add
             .bitmapText(
                 FONT_SIZE * 4,
                 10,
@@ -66,7 +79,7 @@ export default class Hud {
                 FONT_SIZE,
             ));
 
-        this.speed = this.pin(this.scene.add
+        this.speedText = this.pin(this.scene.add
             .bitmapText(
                 FONT_SIZE * 4,
                 FONT_SIZE + 10,
@@ -78,7 +91,7 @@ export default class Hud {
 
     _addBottomRight() {
         this.pin(this.scene.add.rectangle(
-            Consts.screenWidth - FONT_SIZE * 5,
+            Consts.screenWidth - FONT_SIZE * 2,
             Consts.screenHeight + 20,
             200,
             100,
@@ -87,16 +100,16 @@ export default class Hud {
 
         this.pin(this.scene.add
             .bitmapText(
-                Consts.screenWidth - FONT_SIZE * 10,
+                Consts.screenWidth - FONT_SIZE * 7,
                 Consts.screenHeight - 20,
                 Consts.font,
                 'DISTANCE:',
                 FONT_SIZE,
             ));
 
-        this.distance = this.pin(this.scene.add
+        this.distanceText = this.pin(this.scene.add
             .bitmapText(
-                Consts.screenWidth - FONT_SIZE * 6 + 10,
+                Consts.screenWidth - FONT_SIZE * 3 + 10,
                 Consts.screenHeight - 20,
                 Consts.font,
                 '0',
@@ -108,5 +121,30 @@ export default class Hud {
         entity.setDepth(Consts.z.hudLayer);
         entity.setScrollFactor(0, 0);
         return entity;
+    }
+
+    formatMoney(money) {
+        return '$' + this.i18n.format(money);
+    }
+
+    get money() {
+        return this.transposedMoney;
+    }
+
+    get moneyLost() {
+        return MAX_MONEY - this.transposedMoney;
+    }
+
+    get distance() {
+        return this.transposedDist;
+    }
+
+    get distanceTravelled() {
+        return MAX_DISTANCE - this.transposedDist;
+    }
+
+    get averageSpeed() {
+        return this._tachograph.length === 0 ?
+            0 : this._tachograph.reduce((prev, curr) => curr + prev) / this._tachograph.length;
     }
 }

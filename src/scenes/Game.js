@@ -66,8 +66,11 @@ export class Game extends Phaser.Scene {
 		this.audio.fadeOut(() => console.log('test'), { duration: 750 });
 		this.cameras.main.once('camerafadeoutcomplete', () =>
 			this.scene.start('Gameover', {
-				// TODO: pass player score and stats for the game over screen
-				score: 0
+				money: this.hud.formatMoney(this.hud.money),
+				moneyLost: this.hud.formatMoney(this.hud.moneyLost),
+				distance: this.hud.distance,
+				distanceTravelled: this.hud.distanceTravelled,
+				averageSpeed: this.hud.averageSpeed
 			}),
 		);
 		this.cameras.main.fadeOut(Consts.cameraFadeDelay * 2, 0);
@@ -87,6 +90,11 @@ export class Game extends Phaser.Scene {
 
 		this.player.update(time, delta);
 		if (this.player.health == 0) {
+			this.gameOver();
+		}
+
+		if (Consts.debug && this.player.controls.action2.isPressed) {
+			// DEBUG: end the game to check stats
 			this.gameOver();
 		}
 	}

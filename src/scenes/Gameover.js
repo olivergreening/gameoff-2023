@@ -1,8 +1,10 @@
 import Phaser from 'phaser';
 import Consts from '../consts';
+import Utils from '../utils';
 import { Controls } from '../controls';
 import Audio from '../audio';
 
+const FONT_SIZE = 28;
 const W = Consts.screenWidth,
 	H = Consts.screenHeight;
 const W_2 = Consts.screenWidth * 0.5,
@@ -14,9 +16,9 @@ export class Gameover extends Phaser.Scene {
 	}
 
 	init(data) {
-		console.debug('(gameover)', data);
-
-		this.score = data.score || 0;
+		Utils.assert('(gameover data', data);
+		this.data = data;
+		this.win = data.money > 0;
 	}
 
 	create() {
@@ -35,15 +37,15 @@ export class Gameover extends Phaser.Scene {
 			'menu_bkg_2',
 		);
 
-		let text01 = this.score > 0 ? `Congratulations!` : `Oh, no!`;
-		let text02 = this.score > 0 ? `You managed to get away` : `You were caught! See you in 25 years`;
+		let text01 = this.win ? `Congratulations!` : `Oh, no!`;
+		let text02 = this.win ? `You managed to get away` : `You were caught! See you in 25 years`;
 
 		this.add.bitmapText(
 			Consts.screenWidth * 0.5,
 			Consts.screenHeight * 0.5 - 200,
 			Consts.font,
 			text01,
-			48,
+			FONT_SIZE + 20,
 		).setOrigin(0.5);
 
 		this.add.bitmapText(
@@ -51,19 +53,37 @@ export class Gameover extends Phaser.Scene {
 			Consts.screenHeight * 0.5 - 150,
 			Consts.font,
 			text02,
-			28,
+			FONT_SIZE,
 		).setOrigin(0.5);
 
-		// TODO:
-		// if (this.score > 0) {
-		// 	this.add.bitmapText(
-		// 		Consts.screenWidth * 0.5,
-		// 		Consts.screenHeight * 0.5 - 100,
-		// 		Consts.font,
-		// 		'Enter your initials for the high-scores',
-		// 		28,
-		// 	).setOrigin(0.5);
-		// }
+		const stats = [
+			{
+				text: 'Money',
+				value: this.data.money
+			},
+			{
+				text: 'Money lost',
+				value: this.data.moneyLost
+			},
+			{
+				text: 'Distance travelled',
+				value: this.data.distanceTravelled
+			},
+			{
+				text: 'Average speed',
+				value: Phaser.Math.RoundTo(this.data.averageSpeed)
+			}
+		];
+
+		stats.forEach((entry, idx) => {
+			this.add.bitmapText(
+				Consts.screenWidth * 0.5 - 120,
+				Consts.screenHeight * 0.5 - 80 + (idx * (FONT_SIZE + 10)),
+				Consts.font,
+				entry.text + ': ' + entry.value,
+				FONT_SIZE,
+			).setOrigin(0);
+		});
 	}
 
 	update(time, delta) {
