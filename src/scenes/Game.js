@@ -79,13 +79,13 @@ export class Game extends Phaser.Scene {
 
 	update(time, delta) {
 		this.world.update(time, delta);
-		this.player.update(time, delta);
 		this.hud.update(time, delta);
 
 		if (this._gameover) {
 			return;
 		}
 
+		this.player.update(time, delta);
 		if (this.player.health == 0) {
 			this.gameOver();
 		}
