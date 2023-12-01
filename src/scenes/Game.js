@@ -52,6 +52,14 @@ export class Game extends Phaser.Scene {
 			npc.preDestroy();
 		});
 
+		// have NPCs get destroyed if they collide with an obstacle
+		this.world.addObstaclesToNPCsCollider((npc) => {
+			const explosionX = npc.x + npc.width / 2;
+			const explosionY = npc.y - npc.height / 2;
+			this.explosion.playDefault(explosionX, explosionY);
+			npc.preDestroy();
+		});
+
 		// collision detection for police
 		this.world.addPoliceCollider(this.player, (police) => {
 			this.gameOver();

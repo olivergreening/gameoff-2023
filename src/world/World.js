@@ -52,11 +52,16 @@ export class World {
 		this.obstacles = new Obstacles(this.scene, cfg);
 		this.obstacles.generate();
 
-		this.npcs = new NpcGenerator(this.scene, cfg);
+		this.npcs = new NpcGenerator(this.scene, this.player, cfg);
 		this.npcs.generate(this.obstacles.obstacleLanes);
 
 		this.police = new PoliceGenerator(this.scene, this.player, this.npcs.getChildren, this.obstacles.getChildren, cfg);
 		this.police.generate();
+	}
+
+	addObstaclesToNPCsCollider(cb) {
+		this._colliders.push(this.scene.physics.add.collider(this.npcs.group, this.obstacles.obstaclesGroup,
+			(npcHit, obstacleHit) => cb(npcHit)));
 	}
 
 	addObstaclesCollider(actor, cb) {
