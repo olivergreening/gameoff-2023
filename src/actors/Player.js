@@ -17,6 +17,7 @@ export default class Player extends Vehicle {
 			isBraking: false,
 			isBig: false,
 			isSizeSwitchAllowed: true,
+			isAccelerating: false,
 		};
 		
 		this.brakingSpeed = 0.2;
@@ -30,6 +31,8 @@ export default class Player extends Vehicle {
 		this.maxSpeed = this.maxSpeedForSmall;
 		this.speed = this.minSpeed;
 
+		console.log(this)
+		
 		this.init();
 	}
 
@@ -39,6 +42,8 @@ export default class Player extends Vehicle {
 		this.setOrigin(0, 1);
 		this.createAnimations();
 		this.setAnimationToFoward();
+		this.visible = true;
+		this.active = true;
 	}
 
 	createAnimations() {
@@ -239,11 +244,14 @@ export default class Player extends Vehicle {
 			if (this.controls.right.isDown) {
 				this.speed += this.accelerationSpeed;
 				this.speed = this.speed > this.maxSpeed ? this.maxSpeed : this.speed;
+				this.states.isAccelerating = true;
 			} else if (this.controls.left.isDown) {
 				this.states.isBraking = true;
+				this.states.isAccelerating = false;
 			} else {
 				this.speed -= this.decelerationSpeed;
 				this.speed = this.speed < this.minSpeed ? this.minSpeed : this.speed;
+				this.states.isAccelerating = false;
 			}
 		}
 

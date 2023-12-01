@@ -6,6 +6,7 @@ export default class Player extends BaseActor {
 	constructor(scene) {
 		super(scene);
 		this.lane = 0;
+		this.lastLane = 0;
 	}
 
 	calculateLaneY(target) {
@@ -14,6 +15,7 @@ export default class Player extends BaseActor {
 
 	setLane(target) {
 		this.depth = target;
+		this.lastLane = this.lane;
 		this.lane = target;
 		this.y = this.calculateLaneY(this.lane);
 	}

@@ -9,9 +9,6 @@ import Hud from '../hud';
 const MAX_POLICE = 1;
 const MAX_NPC = 50;
 
-let money = 10000000;
-let destructionCaused = 0;
-
 export class Game extends Phaser.Scene {
 	constructor() {
 		super('Game');
@@ -33,7 +30,8 @@ export class Game extends Phaser.Scene {
 
 		this.cameras.main.startFollow(this.player);
 		this.cameras.main.setBounds(0, 0, Consts.worldWidth, Consts.screenHeight);
-
+		this.cameras.main.postFX.addVignette(0.5, 0.5, 0.95);
+		
 		this.world = new World(this, this.player);
 		this.world.generate();
 
@@ -62,7 +60,7 @@ export class Game extends Phaser.Scene {
 
 		// collision detection for police
 		this.world.addPoliceCollider(this.player, (police) => {
-			this.gameOver();
+			this.gameOver(false);
 		});
 	}
 
@@ -73,14 +71,16 @@ export class Game extends Phaser.Scene {
 		}
 	}
 
-	gameOver() {
+	gameOver(win) {
 		this._gameover = true; // player is no longer in control
 		this.world.removeColliders();
+		this.player.destroy();
 
 		this.audio.fadeOut({ duration: Consts.cameraFadeDelay });
 
 		this.cameras.main.once('camerafadeoutcomplete', () =>
 			this.scene.start('Gameover', {
+				win: win,
 				money: this.hud.formatMoney(this.hud.money),
 				moneyLost: this.hud.formatMoney(this.hud.moneyLost),
 				distance: this.hud.distance,
@@ -107,8 +107,10 @@ export class Game extends Phaser.Scene {
 		this.player.update(time, delta);
 
 		// game end condition: player either loses all the cash or max distance reached
-		if (this.player.health <= 0 || this.player.x > Consts.worldWidth) {
-			this.gameOver();
+		if (this.player.x > Consts.worldWidth) {
+			this.gameOver(true);
+		} else if (this.player.health <= 0) {
+			this.gameOver(false);
 		}
 
 		if (Consts.debug && this.player.controls.action2.isPressed) {

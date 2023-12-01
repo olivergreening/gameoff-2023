@@ -3,21 +3,10 @@ import Vehicle from './Vehicle';
 import Consts from '../consts.js';
 
 export default class Police extends Vehicle {
-	constructor(scene, player, otherPolice, npcs, obstacles) {
+	constructor(scene) {
 		super(scene);
-
-		this.player = player;
-		this.otherPolice = otherPolice;
-		this.npcs = npcs;
-		this.obstacles = obstacles;
-
-		this.states = {
-			isLaneSwitchAllowed: true,
-		};
-
 		this.speed = 8;
-
-		this.init();
+		this.init();	
 	}
 
 	init() {
@@ -36,7 +25,7 @@ export default class Police extends Vehicle {
 				break;
 		}
 	}
-
+	
 	update(time, delta) {
 		this.x += this.speed;
 	}

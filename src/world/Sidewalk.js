@@ -64,7 +64,6 @@ export default class Sidewalk {
                         layer.putTileAt(this.tileId(4, 1), x, y);
                     } else if (!layer.hasTileAt(x, y)) {
                         if (mh == y) {
-                            console.log('Da')
                             if (x === 0) {
                                 layer.putTileAt(this.tileId(0, 2), x, y);
                             } else if (x === w - 1) {

@@ -55,7 +55,7 @@ export class World {
 		this.npcs = new NpcGenerator(this.scene, this.player, cfg);
 		this.npcs.generate(this.obstacles.obstacleLanes);
 
-		this.police = new PoliceGenerator(this.scene, this.player, this.npcs.getChildren, this.obstacles.getChildren, cfg);
+		this.police = new PoliceGenerator(this.scene, this.player, this.npcs.group.getChildren(), this.obstacles.group.getChildren(), cfg);
 		this.police.generate();
 	}
 

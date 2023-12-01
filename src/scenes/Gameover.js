@@ -11,14 +11,14 @@ const W_2 = Consts.screenWidth * 0.5,
 	H_2 = Consts.screenHeight * 0.5;
 
 export class Gameover extends Phaser.Scene {
-	constructor() {
+	constructor(win) {
 		super('Gameover');
 	}
 
 	init(data) {
 		Utils.assert('(gameover data', data);
 		this.data = data;
-		this.win = data.money > 0;
+		this.win = data.win;
 	}
 
 	create() {
