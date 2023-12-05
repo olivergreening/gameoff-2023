@@ -5,7 +5,7 @@ import Consts from '../consts.js';
 export default class Police extends Vehicle {
 	constructor(scene) {
 		super(scene);
-		this.speed = 8;
+		this.speed = 9;
 		this.init();	
 	}
 
