@@ -74,7 +74,7 @@ export class Game extends Phaser.Scene {
 	gameOver(win) {
 		this._gameover = true; // player is no longer in control
 		this.world.removeColliders();
-		this.player.destroy();
+		this.player.setVisible(false);
 
 		this.audio.fadeOut({ duration: Consts.cameraFadeDelay });
 
