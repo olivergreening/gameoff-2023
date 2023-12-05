@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import Consts from '../consts';
 import Audio from '../audio';
 import { Controls } from '../controls';
+import { Game } from './Game';
 
 const Y_OFFSET = 150;
 
@@ -89,11 +90,13 @@ export class Transition extends Phaser.Scene {
 		this.controls.update(time);
 
 		if (this.controls.action1.isPressed) {
+			this.scene.remove('Game'); // explicitly remove to reset scene fields
 			this.audio.playSound('menu-select-hard');
 			this.tween.stop();
-			this.cameras.main.once('camerafadeoutcomplete', () =>
-				this.scene.start('Game'),
-			);
+			this.cameras.main.once('camerafadeoutcomplete', () => {
+				this.scene.add('Game', Game); // explicitly re-add
+				this.scene.start('Game');
+			});
 			this.cameras.main.fadeOut(Consts.cameraFadeDelay, 0);
 		}
 	}
