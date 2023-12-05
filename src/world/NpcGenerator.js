@@ -3,8 +3,8 @@ import Npc from '../actors/Npc';
 import Consts from '../consts';
 import Utils from '../utils';
 
-const MAX_NPCS_PER_LANE = 50;
-const GENERATE_TIME_DELAY = 2000; // ms
+const MAX_NPCS_PER_LANE = 70;
+const GENERATE_TIME_DELAY = 1000; // ms
 
 export default class NpcGenerator {
 	constructor(scene, player, config) {
